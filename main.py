@@ -4,10 +4,11 @@ from server import app as flask
 from env import *
 import platform
 from tkinter import messagebox
-import winreg
+
+# import winreg
 import requests
 
-
+"""
 def get_Reg_key(path, key_):
     reg_root = winreg.HKEY_CURRENT_USER
     reg_path = path
@@ -35,7 +36,7 @@ except:
         os.system(WebViewDownloadPath)
 
         restart()
-
+"""
 
 # 渲染引擎字典
 engine_dict = {"Edge": "edgechromium", "IE": "mshtml", "GTK": "gtk"}
@@ -73,8 +74,9 @@ def main(debug, width, height, minimized, engine, server, port, private):
         exit()
     # 防止拿 Wine 跑原神
     if platform.system() != "Windows":
-        messagebox.showerror("错误", "请使用Windows系统运行HoYoGameLauncher")
-        exit()
+        # messagebox.showerror("错误", "请使用Windows系统运行HoYoGameLauncher")
+        # exit()
+        pass
     # 判断是否启动服务器
     if server:
         run_server(port, debug)

@@ -1,5 +1,4 @@
 {
-    "LogAnalysis":"https://gitcode.net/moyanjdc/hoyolauncher/raw/master/exe/CrashLogAnalysis.exe",
     "WebView":"https://go.microsoft.com/fwlink/p/?LinkId=2124703",
     "dataAPI":{
         "ys-Enka":"https://enka.network/api/uid/{}?info",

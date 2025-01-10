@@ -1,12 +1,11 @@
 from configparser import ConfigParser
-import winreg
 from env import *
 import lib
 import os
 from tkinter import ttk
 import ttkbootstrap
 
-
+"""
 def get_Reg_key(path, key_):
     reg_root = winreg.HKEY_LOCAL_MACHINE
     reg_path = path
@@ -15,6 +14,8 @@ def get_Reg_key(path, key_):
     value, key_type = winreg.QueryValueEx(key, key_)
     winreg.CloseKey(key)
     return value
+
+"""
 
 
 def raedini(path):
@@ -28,7 +29,8 @@ def get_game_path():
     srgamepath = "C:\\Program Files\\Genshin Impact\\Game\\YuanShen.exe"
     try:
         yslunpath = get_Reg_key(
-            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\原神", "InstallPath"
+            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\原神",
+            "InstallPath",
         )
     except:
         ys = False
@@ -73,14 +75,14 @@ def main():
         pass
 
     if conf.getInit("conf"):
-        ysgamepath, srgamepath = get_game_path()
-        conf.setGamePath(
-            "ys",
-            ysgamepath,
-        )
-        conf.setGamePath(
-            "sr",
-            srgamepath,
-        )
+        # ysgamepath, srgamepath = get_game_path()
+        # conf.setGamePath(
+        #    "ys",
+        #    ysgamepath,
+        # )
+        # conf.setGamePath(
+        #    "sr",
+        #    srgamepath,
+        # )
         key = lib.generate_random_key(32)
         conf.setInit("conf", "True")

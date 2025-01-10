@@ -13,7 +13,7 @@ from lib import i18ns as i18n
 from lib.retur import Rest
 import subprocess
 
-os.makedirs(os.path.join(os.environ["APPDATA"], "HoYoGameLauncher"), exist_ok=True)
+os.makedirs("HoYoGameLauncher", exist_ok=True)
 with open("data/version.txt", encoding="utf-8") as f:
     HOYOGAMELAUNCHER_VERSION = f.read()
 MODE = json.load(open("config.json", encoding="utf-8"))["mode"]
@@ -64,9 +64,9 @@ print = log.debug
 
 DownloadURL = json.load(open("data/url.json", "r", encoding="utf-8"))
 
-AppDataPath = os.path.join(os.environ["APPDATA"], "HoYoGameLauncher")
+AppDataPath = os.path.join(".", "HoYoGameLauncher")
 
-os.makedirs(os.path.join(AppDataPath, "DownloadFiles"), exist_ok=True)
+# os.makedirs(os.path.join(AppDataPath, "DownloadFiles"), exist_ok=True)
 # Copyright (c) DGP Studio. All rights reserved.
 ApiGeetest = "https://api.geetest.com"
 ApiV6Geetest = "https://apiv6.geetest.com"

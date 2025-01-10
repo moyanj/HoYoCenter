@@ -8,8 +8,9 @@ import json
 import shutil
 import lib
 
-AppDataPath = os.path.join(os.environ["APPDATA"], "HoYoGameLauncher")
+AppDataPath = os.path.join(".", "HoYoGameLauncher")
 save_path = os.path.dirname(os.path.realpath(sys.argv[0]))
+
 
 def get_current_memory_mb():
     # 获取当前进程内存占用。
@@ -58,17 +59,17 @@ def crash(error):
         open_files.append(i.path)
     f = open(os.path.join(DumpPath, "System.json"), "w", encoding="utf-8")
     System = {
-        "DeviceID":mlib.getDeviceID(),
+        "DeviceID": mlib.getDeviceID(),
         "SystemName": system_name,
         "ComputerBit": computer_bit,
         "CPUCount": cpu_count,
         "Disks": disks_list,
         "Networks": {
-            "Bytes Sent":networks.bytes_sent,
-            "Bytes Recv":networks.bytes_recv,
-            "Packages Sent":networks.packets_sent,
-            "Packages Recv":networks.packets_recv,
-        }
+            "Bytes Sent": networks.bytes_sent,
+            "Bytes Recv": networks.bytes_recv,
+            "Packages Sent": networks.packets_sent,
+            "Packages Recv": networks.packets_recv,
+        },
     }
     json.dump(System, f, ensure_ascii=False, indent=4)
     f.close()
@@ -77,7 +78,7 @@ def crash(error):
         "Total": mem_total,
         "Used": mem_used,
         "Free": mem_free,
-        "App":get_current_memory_mb()
+        "App": get_current_memory_mb(),
     }
     json.dump(Mem, f, ensure_ascii=False, indent=4)
     f.close()
@@ -87,12 +88,11 @@ def crash(error):
         "Time Stamp": int(time.time()),
         "Python Version": sys.version.split(" ")[0],
         "Boot Time": psutil.boot_time(),
-        "Application":{
-            "PID":os.getpid(),
-            "Threads Count":p.num_threads(),
-            "Open Files":open_files,
-
-        }
+        "Application": {
+            "PID": os.getpid(),
+            "Threads Count": p.num_threads(),
+            "Open Files": open_files,
+        },
     }
     json.dump(Infos, f, ensure_ascii=False, indent=4)
     f.close()
@@ -100,8 +100,12 @@ def crash(error):
     f.write(str(error))
     f.close()
     shutil.copytree(os.path.join(save_path, "log"), os.path.join(DumpPath, "Log"))
-    shutil.copytree(os.path.join(save_path, "plugins"), os.path.join(DumpPath, "Plugins"))
-    shutil.copy(os.path.join(save_path, "config.json"), os.path.join(DumpPath, "Config.json"))
+    shutil.copytree(
+        os.path.join(save_path, "plugins"), os.path.join(DumpPath, "Plugins")
+    )
+    shutil.copy(
+        os.path.join(save_path, "config.json"), os.path.join(DumpPath, "Config.json")
+    )
     # 以树形列出所有文件
     out = os.popen(f"tree {save_path} /F")
     out = out.read()

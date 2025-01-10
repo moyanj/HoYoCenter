@@ -56,3 +56,10 @@ def Rest(msg: str = "OK", status_code: int = 200, data=None):
     req.headers["Content-Type"] = "application/json; charset=utf-8"
 
     return req
+
+
+def patch_web_log(record):
+    record["name"] = "Web"
+    record["function"] = "js_function"
+    record["line"] = -1
+    return record

@@ -6,6 +6,7 @@ from flask import (
     redirect,
 )  # Flask
 from utils import Rest
+import utils
 import logging
 from env import *  # 所有全局变量
 
@@ -19,13 +20,13 @@ app = Flask("HoYoCenter-Server")
 # 404错误
 @app.errorhandler(404)
 def error_404(e):
-    return Rest("<h1>页面不存在</h1>", 404)
+    return Rest("页面不存在", 404)
 
 
 # 顶级错误处理器
 @app.errorhandler(Exception)
 def error_500(e):
-    return Rest(f"未知错误", 500)
+    return Rest("未知错误", 500, data=str(e))
 
 
 # 输出日志
@@ -48,13 +49,8 @@ def index():
 
 @app.route("/log")
 def add_log():
-    log_type_map = {
-        "info": logging.INFO,
-        "debug": logging.DEBUG,
-        "warning": logging.WARNING,
-        "error": logging.ERROR,
-    }
-    log.log(log_type_map[request.args.get("type")], request.args.get("msg"))  # type: ignore
+    with log.contextualize(name="Web", function="js_function", line=-1):
+        log.patch(utils.patch_web_log).log(request.args.get("type"), request.args.get("msg"))  # type: ignore
     return Rest()
 
 

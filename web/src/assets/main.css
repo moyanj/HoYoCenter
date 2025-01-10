@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "MiSans";
+  src: url("./MiSans-Normal.woff2");
+}
+
+:root {
+  font-family: "MiSans";
+}
+
+body {
+  margin: 0;
+}

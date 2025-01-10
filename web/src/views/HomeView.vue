@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { changeTheme } from '@/utils';
 </script>
 
 <template>
-    <h1>1</h1>
+    <button @click="changeTheme()">change theme</button>
 </template>

@@ -1,8 +1,0 @@
-{
-    "WebView":"https://go.microsoft.com/fwlink/p/?LinkId=2124703",
-    "dataAPI":{
-        "ys-Enka":"https://enka.network/api/uid/{}?info",
-        "ys-MicroGG":"https://profile.microgg.cn/api/uid/{}",
-        "ys-HuTao":"https://enka-api.hut.ao/{}"
-    }
-}

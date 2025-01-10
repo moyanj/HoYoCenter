@@ -39,7 +39,7 @@ except:
 """
 
 # 渲染引擎字典
-engine_dict = {"Edge": "edgechromium", "IE": "mshtml", "GTK": "gtk"}
+engine_dict = {"Edge": "edgechromium", "IE": "mshtml", "GTK": "gtk", "QT": "qt"}
 
 
 def run_server(port, debug):

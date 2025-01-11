@@ -10,5 +10,12 @@ export const useConfigrStore = defineStore('config', () => {
 
     return { count, doubleCount, increment }
 })
-const base_api = "http://localhost:8080"
-const config = await fetch('/config.json').then(res => res.json());
+
+export var base_api = "/";
+if (import.meta.env.DEV) {
+    base_api = "http://127.0.0.1:6553/";
+} else {
+    base_api = "/";
+}
+
+export const config = await fetch(base_api + 'app/config').then(res => res.json()).then(res => res['config']);

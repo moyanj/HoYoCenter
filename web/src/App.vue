@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { ElMenu, ElMenuItem } from 'element-plus';
+import { config } from './stores';
+
+console.log(config);
 </script>
 
 <template>

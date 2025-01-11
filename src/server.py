@@ -47,6 +47,11 @@ def index():
     return send_from_directory(app_dir + "/dist/", "index.html")
 
 
+@app.route("/app/config")
+def app_config():
+    return Rest("获取配置成功", 200, data=config)
+
+
 @app.route("/log")
 def add_log():
     with log.contextualize(name="Web", function="js_function", line=-1):

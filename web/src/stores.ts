@@ -18,4 +18,4 @@ if (import.meta.env.DEV) {
     base_api = "/";
 }
 
-export const config = await fetch(base_api + 'app/config').then(res => res.json()).then(res => res['config']);
+export const config = fetch(base_api + 'app/config').then(res => res.json()).then(res => res['data']).then(res => res['config']);

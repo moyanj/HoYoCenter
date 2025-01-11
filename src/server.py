@@ -74,5 +74,10 @@ async def static_file(request: Request, filename):
     return await file(app_dir + "/static/" + filename)
 
 
+@app.route("/<filename:path>")
+async def dist_file(request: Request, filename):
+    return await file(app_dir + "/dist/" + filename)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6553, debug=True)

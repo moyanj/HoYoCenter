@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { changeTheme } from '@/utils';
+import { useConfigrStore } from '@/stores';
+const configrStore = useConfigrStore();
 </script>
 
 <template>
-    <button @click="changeTheme()">change theme</button>
+    <h1>你好，{{ configrStore.user_name }}！</h1>
 </template>

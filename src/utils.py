@@ -48,8 +48,7 @@ def Rest(msg: str = "OK", status_code: int = 200, data=None):
         处理后的返回字符串
     """
     ret_dict = {"msg": msg, "code": status_code, "data": data}
-    retStr = json.dumps(ret_dict, indent=4, ensure_ascii=False)
-    req = JSONResponse(retStr)
+    req = JSONResponse(ret_dict, ensure_ascii=False)
     req.status = status_code
     req.headers["Content-Type"] = "application/json; charset=utf-8"
 

@@ -16,11 +16,8 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         },
     },
-    esbuild: {
-        target: 'es2015'
-    },
     build: {
-        target: 'es2015',
+        target: 'es6',
         rollupOptions: {
             output: {
                 manualChunks: {

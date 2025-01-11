@@ -4,4 +4,5 @@ from easydict import EasyDict
 
 @dataclass
 class Config:
-    pass
+    def to_dict(self):
+        return self.__dict__

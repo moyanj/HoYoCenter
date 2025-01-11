@@ -1,67 +1,77 @@
-from flask import (
-    Flask,
-    request,
-    send_from_directory,
-    render_template,
-    redirect,
-)  # Flask
+from sanic import Sanic, Request, json, file
+from sanic.exceptions import NotFound, SanicException
+from sanic_cors import CORS
 from utils import Rest
 import utils
 import logging
+import uvloop
+
 from env import *  # 所有全局变量
 
-logs = logging.getLogger("werkzeug")
+uvloop.install()
+Sanic.start_method = "fork"
+Sanic.START_METHOD_SET = True
+
+logs = logging.getLogger("sanic")
 logs.disabled = True
 
-# 初始化Flask
-app = Flask("HoYoCenter-Server")
+# 初始化Sanic
+app = Sanic("HoYoCenter-Server")
+CORS(app)
 
 
 # 404错误
-@app.errorhandler(404)
-def error_404(e):
+@app.exception(NotFound)
+def error_404(request: Request, e):
     return Rest("页面不存在", 404)
 
 
 # 顶级错误处理器
-@app.errorhandler(Exception)
-def error_500(e):
+@app.exception(SanicException)
+def error_500(request: Request, e):
     return Rest("未知错误", 500, data=str(e))
 
 
 # 输出日志
-@app.after_request
-def after_request(response):
-    # 获取状态码
-    status_code = response.status_code
-    # log
-    log.info(
-        f"{request.method} {request.path}{'?' if request.query_string else ''}{request.query_string.decode()} {status_code}"
-    )
-    return response
+@app.after_server_start
+async def after_request(app, loop):
+    async def log_response(request, response):
+        # 获取状态码
+        status_code = response.status
+        # log
+        log.info(
+            f"{request.method} {request.path}{'?' if request.query_string else ''}{request.query_string} {status_code}"
+        )
+
+    app.ctx.log_response = log_response
+
+
+@app.middleware("response")
+async def log_response_middleware(request, response):
+    await app.ctx.log_response(request, response)
 
 
 @app.route("/")
-def index():
+async def index(request: Request):
     # 返回主页
-    return send_from_directory(app_dir + "/dist/", "index.html")
+    return await file(app_dir + "/dist/" + "index.html")
 
 
 @app.route("/app/config")
-def app_config():
-    return Rest("获取配置成功", 200, data=config)
+async def app_config(request: Request):
+    return Rest("获取配置成功", 200, data=config.to_dict())
 
 
 @app.route("/log")
-def add_log():
+async def add_log(request: Request):
     with log.contextualize(name="Web", function="js_function", line=-1):
         log.patch(utils.patch_web_log).log(request.args.get("type"), request.args.get("msg"))  # type: ignore
     return Rest()
 
 
-@app.route("/static/<path:filename>")
-def static_file(filename):
-    return send_from_directory(app_dir + "/static/", filename)
+@app.route("/static/<filename:path>")
+async def static_file(request: Request, filename):
+    return await file(app_dir + "/static/" + filename)
 
 
 if __name__ == "__main__":

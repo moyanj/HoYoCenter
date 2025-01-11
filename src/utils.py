@@ -2,6 +2,8 @@ import sys
 import subprocess
 import socket
 import os
+import json
+from sanic.response import JSONResponse
 from env import *
 
 
@@ -34,10 +36,6 @@ def clear_console():
         os.system("cls")
 
 
-import json
-from flask import make_response
-
-
 def Rest(msg: str = "OK", status_code: int = 200, data=None):
     """Rest
 
@@ -51,8 +49,8 @@ def Rest(msg: str = "OK", status_code: int = 200, data=None):
     """
     ret_dict = {"msg": msg, "code": status_code, "data": data}
     retStr = json.dumps(ret_dict, indent=4, ensure_ascii=False)
-    req = make_response(retStr)
-    req.status_code = status_code
+    req = JSONResponse(retStr)
+    req.status = status_code
     req.headers["Content-Type"] = "application/json; charset=utf-8"
 
     return req

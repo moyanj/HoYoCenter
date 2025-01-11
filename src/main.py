@@ -45,13 +45,7 @@ def run_server(debug):
     port = utils.get_free_port()
     t = Process(
         target=flask.run,
-        kwargs={
-            "host": "0.0.0.0",
-            "port": port,
-            "use_reloader": False,
-            "threaded": False,
-            "debug": debug,
-        },
+        kwargs={"host": "127.0.0.1", "port": port, "debug": debug},
         name="HoYoCenter-Server",
     )
     t.start()

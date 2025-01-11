@@ -9,3 +9,14 @@ export function changeTheme(theme?: string) {
 export function getTheme() {
     return document.documentElement.getAttribute('class');
 }
+
+export class console {
+    static async _log(text: string, type: string) {
+        fetch(`/console?text=${text}&type=${type}`);
+    }
+    static async log(...args: any[]) {
+        if (getTheme() === 'dark') {
+            console.log(...args);
+        }
+    }
+}

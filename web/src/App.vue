@@ -19,7 +19,7 @@ function changeMenu(url: string) {
         <el-menu :collapse="true">
             <el-scrollbar>
             <div class="title logo">HoYoCenter</div>
-            <el-menu-item index="1" @click="changeMenu('home')">开始</el-menu-item>
+            <el-menu-item index="1" @click="changeMenu('/')">开始</el-menu-item>
             <span class="title">游戏</span>
             <el-menu-item index="2" @click="changeMenu('/character')">角色</el-menu-item>
             <el-menu-item index="3" @click="changeMenu('/chouka')">抽卡</el-menu-item>

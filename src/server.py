@@ -36,12 +36,16 @@ def error_500(request: Request, e):
 @app.after_server_start
 async def after_request(app, loop):
     async def log_response(request, response):
-        # 获取状态码
-        status_code = response.status
-        # log
-        log.info(
-            f"{request.method} {request.path}{'?' if request.query_string else ''}{request.query_string} {status_code}"
-        )
+        print(request.path)
+        if request.path == "/log":
+            pass
+        else:
+            # 获取状态码
+            status_code = response.status
+            # log
+            log.info(
+                f"{request.method} {request.path}{'?' if request.query_string else ''}{request.query_string} {status_code}"
+            )
 
     app.ctx.log_response = log_response
 

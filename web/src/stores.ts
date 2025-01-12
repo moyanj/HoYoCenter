@@ -9,21 +9,26 @@ if (import.meta.env.DEV) {
 }
 
 export function initConfig(store: any) {
-    fetch(base_api + "app/config").then((response) => {
-        return response.json();
-    }).then((data) => {
-        store.$patch(data["data"]);
-    });
+    try {
+        fetch(base_api + "app/config").then((response) => {
+            return response.json();
+        }).then((data) => {
+            store.$patch(data["data"]);
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     //const config = JSON.parse(xhr.responseText);
     //store.$patch(config);
 }
 
-export const useConfigrStore = defineStore('config', {
+export const useConfigStore = defineStore('config', {
     state: () => {
         return {
             base_api: base_api,
             user_name: "用户",
+            theme: "auto",
         }
     },
 })

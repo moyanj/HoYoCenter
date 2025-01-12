@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useConfigrStore } from '@/stores';
-const configrStore = useConfigrStore();
+import { useConfigStore } from '@/stores';
+const configrStore = useConfigStore();
 </script>
 
 <template>

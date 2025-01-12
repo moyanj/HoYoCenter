@@ -3,7 +3,7 @@ import { base_api } from './stores';
 
 export function changeTheme(theme?: string) {
     const root = document.documentElement;
-    if (theme === undefined) {
+    if (theme === undefined || theme === 'auto') {
         theme = root.getAttribute('class') === 'dark' ? 'light' : 'dark';
     }
     root.setAttribute('class', theme);

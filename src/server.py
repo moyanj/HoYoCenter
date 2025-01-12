@@ -84,4 +84,4 @@ async def dist_file(request: Request, filename):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6553, debug=True)
+    app.run(host="0.0.0.0", port=6553, debug=True, auto_reload=True)

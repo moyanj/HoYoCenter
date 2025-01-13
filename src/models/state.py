@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from token import OP
 from typing import Optional
 
 

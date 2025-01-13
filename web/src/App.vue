@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ElMenu, ElMenuItem, ElScrollbar } from 'element-plus';
 import { logger, changeTheme } from './utils';
 import { useRouter } from 'vue-router';
@@ -8,8 +8,8 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 const config = useConfigStore();
 const router = useRouter();
 
-function changeMenu(url) {
-    logger.info("changeMenu:", url);
+function changeMenu(url:string) {
+    logger.info("changeMenu:"+ url);
     router.push(url);
 }
 
@@ -64,7 +64,7 @@ onUnmounted(() => {
         </el-menu>
     </div>
     
-    <div class="content"><RouterView /></div>
+    <div class="content"><router-view/></div>
     
 </template>
 
@@ -101,6 +101,7 @@ onUnmounted(() => {
     height: 100%;
     padding: 12px 0;
 }   
+
 </style>
 
 <style>

@@ -3,7 +3,7 @@ import subprocess
 import socket
 import os
 import json
-from sanic.response import JSONResponse
+from fastapi.responses import JSONResponse
 from env import *
 
 
@@ -48,8 +48,8 @@ def Rest(msg: str = "OK", status_code: int = 200, data=None):
         处理后的返回字符串
     """
     ret_dict = {"msg": msg, "code": status_code, "data": data}
-    req = JSONResponse(ret_dict, ensure_ascii=False)
-    req.status = status_code
+    req = JSONResponse(ret_dict)
+    req.status_code = status_code
     req.headers["Content-Type"] = "application/json; charset=utf-8"
 
     return req

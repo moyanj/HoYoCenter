@@ -1,87 +1,80 @@
-from sanic import Sanic, Request, json, file
-from sanic.exceptions import NotFound, SanicException
-from sanic_cors import CORS
+from fastapi import FastAPI, Request, HTTPException, File, UploadFile, Depends
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.logger import logger
+import uvicorn
+import logging
 from utils import Rest
 import utils
-import logging
-import uvloop
-
 from env import *  # 所有全局变量
 
-uvloop.install()
-Sanic.start_method = "fork"
-Sanic.START_METHOD_SET = True
-
-logs = logging.getLogger("sanic")
+# 配置日志
+logging.getLogger("uvicorn").disabled = True
+logs = logging.getLogger("fastapi")
 logs.disabled = True
 
-# 初始化Sanic
-app = Sanic("HoYoCenter-Server")
-CORS(app)
+# 初始化FastAPI
+app = FastAPI(title="HoYoCenter-Server")
+
+# 配置CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # 404错误
-@app.exception(NotFound)
-def error_404(request: Request, e):
+@app.exception_handler(404)
+async def error_404(request: Request, exc: HTTPException):
     return Rest("页面不存在", 404)
 
 
 # 顶级错误处理器
-@app.exception(SanicException)
-def error_500(request: Request, e):
-    return Rest("未知错误", 500, data=str(e))
+@app.exception_handler(HTTPException)
+async def error_500(request: Request, exc: HTTPException):
+    return Rest("未知错误", 500, data=str(exc.detail))
 
 
 # 输出日志
-@app.after_server_start
-async def after_request(app, loop):
-    async def log_response(request, response):
-        print(request.path)
-        if request.path == "/log":
-            pass
-        else:
-            # 获取状态码
-            status_code = response.status
-            # log
-            log.info(
-                f"{request.method} {request.path}{'?' if request.query_string else ''}{request.query_string} {status_code}"
-            )
-
-    app.ctx.log_response = log_response
+@app.middleware("http")
+async def log_request(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path != "/log":
+        logger.info(
+            f"{request.method} {request.url.path}{'?' if request.query_params else ''}{request.query_params} {response.status_code}"
+        )
+    return response
 
 
-@app.middleware("response")
-async def log_response_middleware(request, response):
-    await app.ctx.log_response(request, response)
-
-
-@app.route("/")
-async def index(request: Request):
+@app.get("/")
+async def index():
     # 返回主页
-    return await file(app_dir + "/dist/" + "index.html")
+    return FileResponse(path=app_dir + "/dist/" + "index.html")
 
 
-@app.route("/app/config")
-async def app_config(request: Request):
+@app.get("/app/config")
+async def app_config():
     return Rest("获取配置成功", 200, data=config.to_dict())
 
 
-@app.route("/log")
+@app.get("/log")
 async def add_log(request: Request):
     with log.contextualize(name="Web", function="js_function", line=-1):
-        log.patch(utils.patch_web_log).log(request.args.get("type"), request.args.get("msg"))  # type: ignore
+        log.patch(utils.patch_web_log).log(request.query_params.get("type"), request.query_params.get("msg"))  # type: ignore
     return Rest()
 
 
-@app.route("/static/<filename:path>")
-async def static_file(request: Request, filename):
-    return await file(app_dir + "/static/" + filename)
-
-
-@app.route("/<filename:path>")
-async def dist_file(request: Request, filename):
-    return await file(app_dir + "/dist/" + filename)
-
+# 挂载静态文件目录
+app.mount(
+    "/static",
+    StaticFiles(directory=app_dir + "/static", check_dir=False),
+    name="static",
+)
+app.mount("/", StaticFiles(directory=app_dir + "/dist", check_dir=False), name="dist")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6553, debug=True, auto_reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=6553)

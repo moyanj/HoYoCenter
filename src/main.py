@@ -4,9 +4,10 @@ from server import app as flask
 from env import *
 from tkinter import messagebox
 import os
-import requests
+import httpx
 import utils
 from multiprocessing import Process
+import uvicorn
 
 # 渲染引擎字典
 engine_dict = {"edge": "edgechromium", "ie": "mshtml", "gtk": "gtk", "qt": "qt"}
@@ -30,7 +31,7 @@ def install_webview():
     messagebox.showwarning("警告", "未安装Microsoft Edge WebView2")
     # 是否安装Microsoft Edge WebView2
     if messagebox.askyesno("提示", "是否安装Microsoft Edge WebView2?"):
-        req = requests.get(URLS.webview)
+        req = httpx.get(URLS.webview)
         WebViewDownloadPath = os.path.join(
             dirs.user_cache_dir, "MicrosoftEdgeWebView2.exe"
         )
@@ -44,8 +45,8 @@ def install_webview():
 def run_server(debug):
     port = utils.get_free_port()
     t = Process(
-        target=flask.run,
-        kwargs={"host": "127.0.0.1", "port": port, "debug": debug},
+        target=uvicorn.run,
+        kwargs={"host": "127.0.0.1", "port": port, "app": flask},
         name="HoYoCenter-Server",
     )
     t.start()

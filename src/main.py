@@ -1,3 +1,5 @@
+from core.error import error_handler, proc
+import sys
 import webview
 import click
 from server import app as flask
@@ -8,6 +10,8 @@ import httpx
 import utils
 from multiprocessing import Process
 import uvicorn
+
+sys.excepthook = error_handler
 
 # 渲染引擎字典
 engine_dict = {"edge": "edgechromium", "ie": "mshtml", "gtk": "gtk", "qt": "qt"}
@@ -75,6 +79,7 @@ def main(debug, width, height, minimized, engine):
 
     # 判断是否启动服务器
     url, t = run_server(debug)
+    proc.append(t)
 
     window_args = {
         "title": "HoYoCenter",

@@ -1,0 +1,70 @@
+name: Build Workflow
+
+on: push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: |
+          echo "Installing Python dependencies..."
+          python -m pip install --upgrade pip uv
+          uv install -r pyproject.toml
+          echo "Installing Node.js dependencies..."
+          cd web
+          pnpm install
+
+      - name: Build web
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          echo "Building web project..."
+          cd web
+          pnpm run build
+
+      - name: Upload web
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: web
+          path: web/dist
+
+      - name: Download web
+        if: matrix.os != 'ubuntu-latest'
+        uses: actions/download-artifact@v3
+        with:
+          name: web
+          path: web/dist
+
+      - name: Build
+        run: |
+          echo "Running Python build script..."
+          python build.py
+
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: HoYoCenter-${{ matrix.os }}-${{ github.sha }}-${{ github.run_number }}
+          path: dist/HoYoCenter

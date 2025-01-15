@@ -3,6 +3,8 @@ import os
 import shutil
 import sys
 import zipfile
+import json
+import time
 
 NPM = "pnpm"
 PYTHON = "python"
@@ -26,6 +28,24 @@ def make_zip():
     zip.close()
 
 
+def make_build_info():
+    return {
+        "version": "1.0.0",
+        "commit": subprocess.check_output("git rev-parse HEAD", shell=True)
+        .decode("utf-8")
+        .strip(),
+        "branch": subprocess.check_output("git rev-parse --abbrev-ref HEAD", shell=True)
+        .decode("utf-8")
+        .strip(),
+        "python": ".".join(
+            [str(sys.version_info.major), str(sys.version_info.minor), str(sys.version_info.micro)]  # type: ignore
+        ),
+        "platform": sys.platform,
+        "args": sys.argv[1:],
+        "build_time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+    }
+
+
 def build_web():
     os.chdir("web")
     subprocess.run(f"{NPM} run build", shell=True, check=True)
@@ -46,6 +66,8 @@ def copy_data():
 
     shutil.copytree("web/dist", "dist/HoYoCenter/dist", dirs_exist_ok=True)
     shutil.copytree("src/data", "dist/HoYoCenter/data", dirs_exist_ok=True)
+    with open("dist/HoYoCenter/build_info.json", "w") as f:
+        json.dump(make_build_info(), f)
 
 
 def main():

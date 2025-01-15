@@ -1,8 +1,7 @@
-click==8.1.8
-sanic==24.12.0
-loguru==0.7.3
-pywebview==5.3.2
-easydict==1.13
-platformdirs==4.3.6
-httpx==0.28.1
-pywebview[qt]
+click
+fastapi
+loguru
+pywebview
+easydict
+platformdirs
+httpx

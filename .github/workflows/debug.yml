@@ -54,6 +54,7 @@ jobs:
 
       - name: Upload web
         if: matrix.os == 'ubuntu-latest'
+        id: upload-web
         uses: actions/upload-artifact@v3
         with:
           name: web
@@ -61,6 +62,7 @@ jobs:
 
       - name: Download web
         if: matrix.os != 'ubuntu-latest'
+        need: upload-web
         uses: actions/download-artifact@v3
         with:
           name: web

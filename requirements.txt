@@ -1,7 +1,0 @@
-click
-fastapi
-loguru
-pywebview
-easydict
-platformdirs
-httpx

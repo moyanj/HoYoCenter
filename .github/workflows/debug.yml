@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "Installing Python dependencies..."
           python -m pip install uv
-          uv pip install -r pyproject.toml
+          uv pip install --system -r pyproject.toml
           echo "Installing Node.js dependencies..."
           cd web
           pnpm install
@@ -42,7 +42,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Installing GTK dependencies..."
-          uv pip install -r pyproject.toml --extra gtk
+          uv pip install --system -r pyproject.toml --extra gtk
 
       - name: Build web
         if: matrix.os == 'ubuntu-latest'
@@ -80,7 +80,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Running Qt build script..."
-          uv pip install -r pyproject.toml --extra qt
+          uv pip install --system -r pyproject.toml --extra qt
           python build.py no-web
 
       - name: Upload Qt Version

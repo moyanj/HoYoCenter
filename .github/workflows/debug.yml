@@ -3,6 +3,37 @@ name: Build Workflow
 on: push
 
 jobs:
+  build_web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          cache-dependency-path: "web/pnpm-lock.yaml"
+      - name: Install dependencies
+        run: |
+          echo "Installing Node.js dependencies..."
+          cd web
+          pnpm install
+      - name: Build web
+        run: |
+          echo "Building web project..."
+          cd web
+          pnpm run build
+      - name: Upload web
+        uses: actions/upload-artifact@v3
+        with:
+          name: web
+          path: web/dist
+
   build:
     strategy:
       matrix:
@@ -17,26 +48,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "22"
-          cache: "pnpm"
-          cache-dependency-path: "web/pnpm-lock.yaml"
-
       - name: Install dependencies
         run: |
           echo "Installing Python dependencies..."
           python -m pip install uv
           uv pip install --system -r pyproject.toml
-          echo "Installing Node.js dependencies..."
-          cd web
-          pnpm install
 
       - name: Install GTK
         if: matrix.os == 'ubuntu-latest'
@@ -45,24 +61,7 @@ jobs:
           sudo apt-get install libcairo2-dev libgirepository1.0-dev libglib2.0-dev libgtk-3-dev 
           uv pip install --system -r pyproject.toml --extra gtk
 
-      - name: Build web
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          echo "Building web project..."
-          cd web
-          pnpm run build
-
-      - name: Upload web
-        if: matrix.os == 'ubuntu-latest'
-        id: upload-web
-        uses: actions/upload-artifact@v3
-        with:
-          name: web
-          path: web/dist
-
       - name: Download web
-        if: matrix.os != 'ubuntu-latest'
-        need: upload-web
         uses: actions/download-artifact@v3
         with:
           name: web

@@ -29,7 +29,7 @@ jobs:
           cd web
           pnpm run build
       - name: Upload web
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: web/dist
@@ -62,7 +62,7 @@ jobs:
           uv pip install --system -r pyproject.toml --extra gtk
 
       - name: Download web
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web
           path: web/dist
@@ -73,10 +73,11 @@ jobs:
           python build.py no-web
 
       - name: Upload build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: HoYoCenter-${{ matrix.os }}-${{ github.sha }}-${{ github.run_number }}
-          path: dist/HoYoCenter
+          name: HoYoCenter-${{ matrix.os }}-${{ github.sha }}
+          path: dist/HoYoCenter.zip
+          compression-level: 0
 
       - name: Build Qt Version
         if: matrix.os == 'ubuntu-latest'
@@ -87,7 +88,8 @@ jobs:
 
       - name: Upload Qt Version
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: HoYoCenter-Qt-${{ matrix.os }}-${{ github.sha }}-${{ github.run_number }}
-          path: dist/HoYoCenter
+          name: HoYoCenter-Qt-${{ matrix.os }}-${{ github.sha }}
+          path: dist/HoYoCenter.zip
+          compression-level: 0

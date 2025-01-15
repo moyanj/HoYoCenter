@@ -1,5 +1,7 @@
 from core.error import error_handler, proc
 import sys
+
+sys.excepthook = error_handler
 import webview
 import click
 from server import app as flask
@@ -10,8 +12,6 @@ import httpx
 import utils
 from multiprocessing import Process
 import uvicorn
-
-sys.excepthook = error_handler
 
 # 渲染引擎字典
 engine_dict = {"edge": "edgechromium", "ie": "mshtml", "gtk": "gtk", "qt": "qt"}

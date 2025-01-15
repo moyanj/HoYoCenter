@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: |
           echo "Installing Python dependencies..."
-          python -m pip install --upgrade pip uv
-          uv install -r pyproject.toml
+          python -m pip install uv
+          uv pip install -r pyproject.toml
           echo "Installing Node.js dependencies..."
           cd web
           pnpm install

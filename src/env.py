@@ -11,13 +11,15 @@ from typing import Any
 __all__ = ["DEBUG", "URLS", "dirs", "is_linux", "log", "app_dir", "state", "config"]
 
 DEBUG = True if "--debug" in sys.argv else False  # 是否为调试模式
-URLS: Any = EasyDict(json.load(open("data/urls.json", encoding="utf-8")))  # 所有URL
+app_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
+URLS: Any = EasyDict(
+    json.load(open(os.path.join(app_dir, "data/urls.json"), encoding="utf-8"))
+)  # 所有URL
 
 is_linux = sys.platform == "linux"
 
 dirs = PlatformDirs("HoYoCenter", ensure_exists=True)  # 平台目录
 state = State()  # 状态
-app_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
 if os.path.exists(os.path.join(dirs.user_config_dir, "config.json")):
     config_fp = open(
@@ -48,4 +50,4 @@ log.add(
     enqueue=True,
     rotation="10 MB",
 )
-print("日志文件路径：", os.path.join(dirs.user_log_dir, "HoYoCenter.log"))
+log.debug("日志文件路径：", os.path.join(dirs.user_log_dir, "HoYoCenter.log"))

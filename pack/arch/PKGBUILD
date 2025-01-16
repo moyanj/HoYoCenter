@@ -2,7 +2,7 @@
 # Maintainer: MoYan <moyan@moyanjdc.top>
 
 pkgname=hoyocenter-git
-pkgver=r144.848c4c1  # 请替换为实际的版本号
+pkgver=r145.d772393  # 请替换为实际的版本号
 pkgrel=1
 pkgdesc="A cross-platform tool for querying data of miHoYo series games."
 arch=('x86_64')
@@ -29,13 +29,22 @@ build() {
   cd web
   pnpm install
   cd ..
-  python build.py no-zip
+  uv run build.py no-zip
 }
 
 package() {
   cd "$srcdir/HoYoCenter"
-  ls
-  install -Dm755 "./dist/HoYoCener" "/opt/HoYoCenter"
-  ln -s "/opt/HoYoCenter" "/usr/bin/HoYoCenter"
+
+  mkdir -p "$pkgdir/opt/HoYoCenter"
+  cp -r dist/HoYoCenter "$pkgdir/opt"
+
+  chmod +x "$pkgdir/opt/HoYoCenter/HoYoCenter"
+
+  mkdir -p "$pkgdir/usr/share/icons/hicolor/512x512/apps"
+  cp -r "$srcdir/HoYoCenter/images/icon.png" "$pkgdir/usr/share/icons/hicolor/512x512/apps/HoYoCenter.png"
+  
+  mkdir -p "$pkgdir/usr/bin"
+  cd "$pkgdir/usr/bin"
+  ln -s "$pkgdir/opt/HoYoCenter/HoYoCenter" .
 
 }

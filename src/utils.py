@@ -1,8 +1,6 @@
 import sys
 import subprocess
 import socket
-import os
-import json
 from fastapi.responses import JSONResponse
 from env import *
 
@@ -29,13 +27,6 @@ def get_free_port():
             base = 49152
 
 
-def clear_console():
-    if is_linux:
-        os.system("clear")
-    else:
-        os.system("cls")
-
-
 def Rest(msg: str = "OK", status_code: int = 200, data=None):
     """Rest
 
@@ -60,10 +51,3 @@ def patch_web_log(record):
     record["function"] = "js_function"
     record["line"] = -1
     return record
-
-
-def save_config():
-    with open(
-        os.path.join(dirs.user_config_dir, "config.json"), "w", encoding="utf-8"
-    ) as f:
-        json.dump(config.to_dict(), f)

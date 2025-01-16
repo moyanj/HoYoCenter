@@ -4,7 +4,7 @@ import os
 from loguru import logger as log
 from easydict import EasyDict
 from platformdirs import PlatformDirs
-from models import State, Config
+from models import Config
 
 from typing import Any
 
@@ -15,7 +15,6 @@ __all__ = [
     "is_linux",
     "log",
     "app_dir",
-    "state",
     "config",
     "build_info",
 ]
@@ -43,7 +42,6 @@ except:
 is_linux = sys.platform == "linux"
 
 dirs = PlatformDirs("HoYoCenter", ensure_exists=True)  # 平台目录
-state = State()  # 状态
 
 if os.path.exists(os.path.join(dirs.user_config_dir, "config.json")):
     config_fp = open(
@@ -56,7 +54,7 @@ else:
     config_fp.write("{}")
     config_fp.seek(0)
 
-config = Config(**json.load(config_fp))  # 配置文件
+config = Config(json.load(config_fp))  # 配置文件
 
 log_format = (
     "{time:YYYY-MM-DD HH:mm:ss.SSS} | "

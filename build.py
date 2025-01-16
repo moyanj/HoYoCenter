@@ -48,7 +48,7 @@ def make_build_info():
 
 def build_web():
     os.chdir("web")
-    subprocess.run(f"{NPM} run build", shell=True, check=True)
+    subprocess.run(f"{NPM} run build-only", shell=True, check=True)
     os.chdir("..")
 
 
@@ -76,7 +76,8 @@ def main():
         build_web()
     build_server()
     copy_data()
-    make_zip()
+    if "no-zip" not in sys.argv:
+        make_zip()
 
 
 if __name__ == "__main__":

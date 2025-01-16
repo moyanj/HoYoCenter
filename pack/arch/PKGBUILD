@@ -1,0 +1,41 @@
+# 维护者信息
+# Maintainer: MoYan <moyan@moyanjdc.top>
+
+pkgname=hoyocenter-git
+pkgver=r144.848c4c1  # 请替换为实际的版本号
+pkgrel=1
+pkgdesc="A cross-platform tool for querying data of miHoYo series games."
+arch=('x86_64')
+url="https://github.com/moyanj/HoYoCenter"
+license=('MIT')
+depends=('webkit2gtk-4.1')  # 根据实际依赖进行调整
+makedepends=('git' 'python' 'nodejs-lts-iron' 'pnpm')  # 构建时需要的依赖
+source=("git+https://github.com/moyanj/HoYoCenter.git")
+sha256sums=('SKIP')  # 实际构建时需要计算源代码的校验和
+
+pkgver() {
+  cd "$srcdir/HoYoCenter"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd "$srcdir/HoYoCenter"
+}
+
+build() {
+  cd "$srcdir/HoYoCenter"
+  uv venv
+  uv pip install -r pyproject.toml --extra gtk
+  cd web
+  pnpm install
+  cd ..
+  python build.py no-zip
+}
+
+package() {
+  cd "$srcdir/HoYoCenter"
+  ls
+  install -Dm755 "./dist/HoYoCener" "/opt/HoYoCenter"
+  ln -s "/opt/HoYoCenter" "/usr/bin/HoYoCenter"
+
+}

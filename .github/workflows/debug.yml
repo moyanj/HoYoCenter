@@ -84,6 +84,7 @@ jobs:
         run: |
           echo "Running Qt build script..."
           uv pip install --system -r pyproject.toml --extra qt
+          uv sync --extra qt
           python build.py no-web
 
       - name: Upload Qt Version

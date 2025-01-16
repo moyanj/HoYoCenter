@@ -13,8 +13,13 @@ import utils
 from multiprocessing import Process
 import uvicorn
 
-# 渲染引擎字典
-engine_dict = {"edge": "edgechromium", "ie": "mshtml", "gtk": "gtk", "qt": "qt"}
+# 渲染器字典
+renderer_dict = {
+    "edge": "edgechromium",  # Edge WebView2
+    "ie": "mshtml",  # Internet Explorer
+    "gtk": "gtk",  # WebKit2GTK
+    "qt": "qt",  # QTWebEngine
+}
 
 
 def has_webview():
@@ -50,7 +55,12 @@ def run_server(debug):
     port = utils.get_free_port()
     t = Process(
         target=uvicorn.run,
-        kwargs={"host": "127.0.0.1", "port": port, "app": flask},
+        kwargs={
+            "host": "127.0.0.1",
+            "port": port,
+            "app": flask,
+            "log_level": "critical",
+        },
         name="HoYoCenter-Server",
     )
     t.start()
@@ -63,16 +73,16 @@ def run_server(debug):
 @click.option("--width", default=1280, help="宽度")
 @click.option("--height", default=720, help="高度")
 @click.option("--minimized", is_flag=True, help="最小化")
-@click.option("--engine", default="edge", help="webview引擎")
-def main(debug, width, height, minimized, engine):
+@click.option("--renderer", default="edge", help="Webview渲染器")
+def main(debug, width, height, minimized, renderer):
     """主函数
 
     Arguments:
         略
     """
     # 判断是否为正确的渲染引擎
-    if engine not in engine_dict.keys():
-        messagebox.showerror("错误", "请输入正确的引擎！")
+    if renderer not in renderer_dict.keys():
+        messagebox.showerror("错误", "请输入正确的渲染引擎！")
         exit()
 
     install_webview()
@@ -90,8 +100,8 @@ def main(debug, width, height, minimized, engine):
     }
 
     start_args = {
-        "user_agent": "HoYoCenter-WebView/1.1.0",
-        "gui": engine_dict[engine],
+        "user_agent": "HoYoCenter-WebView/" + build_info["version"],
+        "gui": renderer_dict[renderer],
         "storage_path": os.path.join(dirs.user_data_dir, "Web"),
     }
 

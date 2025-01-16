@@ -15,5 +15,3 @@ app.use(createPinia())
 app.use(router)
 initConfig(useConfigStore());
 app.mount('#app')
-
-import './worker';

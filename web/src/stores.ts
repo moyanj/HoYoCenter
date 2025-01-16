@@ -19,17 +19,26 @@ export function initConfig(store: any) {
         console.log(e);
     }
 
-    //const config = JSON.parse(xhr.responseText);
-    //store.$patch(config);
+    store.$subscribe(syncConfig)
+}
+
+async function syncConfig() {
+    const config = useConfigStore();
+    await fetch(base_api + "app/config", {
+        method: "POST",
+        body: JSON.stringify(config.$state),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
 }
 
 export const useConfigStore = defineStore('config', {
     state: () => {
         return {
-            base_api: base_api,
             user_name: "用户",
             theme: "auto",
         }
-    },
+    }
 })
 

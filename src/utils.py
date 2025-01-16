@@ -60,3 +60,10 @@ def patch_web_log(record):
     record["function"] = "js_function"
     record["line"] = -1
     return record
+
+
+def save_config():
+    with open(
+        os.path.join(dirs.user_config_dir, "config.json"), "w", encoding="utf-8"
+    ) as f:
+        json.dump(config.to_dict(), f)

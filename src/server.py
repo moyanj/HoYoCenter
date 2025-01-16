@@ -12,7 +12,7 @@ from env import *  # 所有全局变量
 # 配置日志
 logging.getLogger("uvicorn").disabled = True
 logs = logging.getLogger("fastapi")
-logs.disabled = True
+# logs.disabled = True
 
 # 初始化FastAPI
 app = FastAPI(title="HoYoCenter-Server")
@@ -21,8 +21,7 @@ app = FastAPI(title="HoYoCenter-Server")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -56,8 +55,11 @@ async def index():
     return FileResponse(path=app_dir + "/dist/" + "index.html")
 
 
-@app.get("/app/config")
-async def app_config():
+@app.route("/app/config", methods=["GET", "POST"])
+async def app_config(request: Request):
+    if request.method == "POST":
+        config.update(await request.json())
+        utils.save_config()
     return Rest("获取配置成功", 200, data=config.to_dict())
 
 

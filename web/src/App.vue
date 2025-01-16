@@ -42,6 +42,12 @@ onUnmounted(() => {
     window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', updateTheme);
     window.matchMedia('(prefers-color-scheme: light)').removeEventListener('change', updateTheme);
 });
+watch(
+    () => config.theme,
+    () => {
+        updateTheme();
+    }
+)
 </script>
 
 <template>

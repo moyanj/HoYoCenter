@@ -21,7 +21,7 @@ async def get_build_info():
 
 @method(name="data.update_config")
 async def update_config(data: dict, save: bool = True):
-    config._update(data)
+    config.update(data)
     if save:
         await config.__save__(os.path.join(dirs.user_config_dir, "config.json"))
     return Success()

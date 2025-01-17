@@ -19,6 +19,7 @@ export const useConfigStore = defineStore('config', {
             user_name: "用户",
             theme: "auto",
             init: false,
+            games: []
         }
     }
 })

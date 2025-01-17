@@ -9,6 +9,7 @@ export interface Config {
     theme: string;
     user_name: string;
     init: boolean;
+    games: string[];
 }
 
 export interface Backend {

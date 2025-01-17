@@ -47,7 +47,7 @@ def Rest(msg: str = "OK", status_code: int = 200, data=None):
 
 
 def patch_web_log(record):
-    record["name"] = "Web"
+    record["name"] = "web"
     record["function"] = "js_function"
     record["line"] = -1
     return record

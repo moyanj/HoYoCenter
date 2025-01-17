@@ -1,4 +1,6 @@
 from jsonrpcserver import method, Result, Success, Error
+import os
+import utils
 from env import *
 
 
@@ -18,30 +20,36 @@ async def get_build_info():
 
 
 @method(name="data.update_config")
-async def update_config(data: dict):
+async def update_config(data: dict, save: bool = True):
     config.update(data)
+    if save:
+        await config.__save__(os.path.join(dirs.user_config_dir, "config.json"))
     return Success()
+
+
+def base_log(level: str, msg: str):
+    log.patch(utils.patch_web_log).log(level, msg)
 
 
 @method(name="log.info")
 async def log_info(msg: str):
-    log.info(msg)
+    base_log("INFO", msg)
     return Success()
 
 
 @method(name="log.warning")
 async def log_warning(msg: str):
-    log.warning(msg)
+    base_log("WARNING", msg)
     return Success()
 
 
 @method(name="log.error")
 async def log_error(msg: str):
-    log.error(msg)
+    base_log("ERROR", msg)
     return Success()
 
 
 @method(name="log.debug")
 async def log_debug(msg: str):
-    log.debug(msg)
+    base_log("DEBUG", msg)
     return Success()

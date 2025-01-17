@@ -1,4 +1,5 @@
-from env import *
+import aiofiles
+import ujson
 
 
 class BetterDict:
@@ -38,10 +39,14 @@ class BetterDict:
         return iter(self.__dict__)
 
     def __str__(self):
-        return str(self.__dict__)
+        return ujson.dumps(self.__dict__, ensure_ascii=False, indent=4)
 
     def __repr__(self):
         return f"BetterDict({self.__dict__})"
+
+    async def __save__(self, path: str):
+        async with aiofiles.open(path, "w") as f:
+            await f.write(str(self))
 
 
 class Config(BetterDict):

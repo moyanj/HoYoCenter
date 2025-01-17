@@ -13,7 +13,7 @@ class BetterDict:
         self.__dict__[key] = value
 
     def __getattr__(self, key):
-        return self.__dict__[key]
+        return self.__dict__.get(key)
 
     def __setattr__(self, key, value):
         self.__dict__[key] = value
@@ -45,6 +45,6 @@ class BetterDict:
 
 
 class Config(BetterDict):
-    app_name: str = "HoYoCenter"
     user_name: str = "用户"
     theme: str = "auto"
+    init: bool = False

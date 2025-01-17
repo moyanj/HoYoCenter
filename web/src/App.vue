@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ElMenu, ElMenuItem, ElScrollbar } from 'element-plus';
+import InitView from './views/InitView.vue';
 import { logger, changeTheme } from './utils';
 import { useRouter } from 'vue-router';
 import { useConfigStore } from './stores';
@@ -71,6 +72,7 @@ watch(
     </div>
     
     <div class="content"><router-view/></div>
+    <div class="initview" v-if="!config.init"><init-view/></div>
     
 </template>
 

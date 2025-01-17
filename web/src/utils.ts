@@ -1,4 +1,4 @@
-import { rpc, type Backend } from "./rpc";
+import { rpc } from "./rpc";
 
 export function changeTheme(theme?: string) {
     const root = document.documentElement;

@@ -8,6 +8,7 @@ if (import.meta.env.DEV) {
 export interface Config {
     theme: string;
     user_name: string;
+    init: boolean;
 }
 
 export interface Backend {

@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { rpc, type Config } from './rpc';
 
@@ -19,6 +18,7 @@ export const useConfigStore = defineStore('config', {
         return {
             user_name: "用户",
             theme: "auto",
+            init: false,
         }
     }
 })

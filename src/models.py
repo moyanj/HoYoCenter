@@ -21,6 +21,9 @@ class BetterDict:
             raise AttributeError(f"BetterDict has no attribute '{name}'")
 
     def __setattr__(self, name, value):
+        if name == "_BetterDict__dict":
+            super().__setattr__(name, value)
+            return
 
         if isinstance(value, dict):
             value = BetterDict(value)

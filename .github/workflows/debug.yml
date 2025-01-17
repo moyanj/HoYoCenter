@@ -49,32 +49,18 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Cache Venv
-        uses: actions/cache/restore@v3
-        with:
-          path: .venv
-          key: ${{ matrix.os }}-venv-${{ hashFiles('pyproject.toml') }}
-
       - name: Install dependencies
         run: |
           echo "Installing Python dependencies..."
           python -m pip install uv
-          uv venv
-          uv pip install -r pyproject.toml
-
-      - name: Cache Venv
-        uses: actions/cache/save@v3
-        with:
-          path: .venv
-          key: ${{ matrix.os }}-venv-${{ hashFiles('pyproject.toml') }}
+          uv pip install --system -r pyproject.toml
 
       - name: Install GTK
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Installing GTK dependencies..."
           sudo apt-get install libgirepository-1.0-dev libcairo2-dev libglib2.0-dev
-          uv venv
-          uv pip install -r pyproject.toml --extra gtk
+          uv pip install --system -r pyproject.toml --extra gtk
 
       - name: Download web
         uses: actions/download-artifact@v4
@@ -85,7 +71,6 @@ jobs:
       - name: Build
         run: |
           echo "Running Python build script..."
-          uv venv
           python build.py no-web
 
       - name: Upload build
@@ -99,8 +84,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Running Qt build script..."
-          uv venv
-          uv pip install -r pyproject.toml --extra qt
+          uv pip install --system -r pyproject.toml --extra qt
           uv sync --extra qt
           python build.py no-web
 

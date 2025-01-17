@@ -3,13 +3,11 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import topLevelAwait from 'vite-plugin-top-level-await';
 
 export default defineConfig({
     plugins: [
         vue(),
-        vueDevTools(),
-        topLevelAwait()
+        vueDevTools()
     ],
     resolve: {
         alias: {

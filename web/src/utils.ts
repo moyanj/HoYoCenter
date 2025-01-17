@@ -1,5 +1,4 @@
-import { base_api } from './stores';
-
+import { rpc, type Backend } from "./rpc";
 
 export function changeTheme(theme?: string) {
     const root = document.documentElement;
@@ -13,24 +12,26 @@ export function getTheme() {
     return document.documentElement.getAttribute('class');
 }
 
+type LogLevel = "info" | "warning" | "error" | "debug";
+
 export class logger {
-    static _log(text: any, type: string) {
-        console.log(text);
+    static _log(text: any, level: LogLevel) {
         if (typeof text === 'object') {
             text = JSON.stringify(text);
         }
-        fetch(`${base_api}log?msg=${text.toString()}&type=${type}`);
+        // @ts-ignore
+        rpc.call("log." + level, [text]);
     }
     static info(text: any) {
-        this._log(text, 'INFO');
+        this._log(text, "info");
     }
     static warn(text: any) {
-        this._log(text, 'WARNNING');
+        this._log(text, "warning");
     }
     static error(text: any) {
-        this._log(text, 'ERROR');
+        this._log(text, "error");
     }
     static debug(text: any) {
-        this._log(text, 'DEBUG');
+        this._log(text, "debug");
     }
 }

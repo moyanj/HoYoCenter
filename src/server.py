@@ -37,7 +37,7 @@ async def error_500(request: Request, exc: HTTPException):
 # 输出日志
 @app.middleware("http")
 async def log_request(request: Request, call_next):
-    response = await call_next(request)
+    response: Response = await call_next(request)
     if request.url.path != "/log":
         log.info(
             f"{request.method} {request.url.path}{'?' if request.query_params else ''}{request.query_params} {response.status_code}"
@@ -51,7 +51,7 @@ async def index():
     return FileResponse(path=app_dir + "/dist/" + "index.html")
 
 
-@app.route("/api")
+@app.route("/api", methods=["POST"])
 async def api(request: Request):
     # 处理JSON-RPC请求
     response = await async_dispatch(

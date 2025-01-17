@@ -20,23 +20,28 @@ async def get_build_info():
 @method(name="data.update_config")
 async def update_config(data: dict):
     config.update(data)
+    return Success()
 
 
 @method(name="log.info")
 async def log_info(msg: str):
     log.info(msg)
+    return Success()
 
 
 @method(name="log.warning")
 async def log_warning(msg: str):
     log.warning(msg)
+    return Success()
 
 
 @method(name="log.error")
 async def log_error(msg: str):
     log.error(msg)
+    return Success()
 
 
 @method(name="log.debug")
 async def log_debug(msg: str):
     log.debug(msg)
+    return Success()

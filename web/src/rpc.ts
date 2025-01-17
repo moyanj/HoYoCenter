@@ -5,11 +5,35 @@ if (import.meta.env.DEV) {
     base_api = "";
 }
 
+export interface GameConfig {
+    enable: boolean;
+    uid: string;
+}
+
+export interface UserConfig {
+    name: string;
+    cookie: string;
+    uid: string;
+    ltoken_v1: string;
+    ltoken_v2: string;
+    stoken_v1: string;
+    stoken_v2: string;
+    game_token: string;
+    mid: string;
+    cookie_token: string;
+    fp: string;
+}
+
 export interface Config {
     theme: string;
     user_name: string;
+    game: {
+        ys: GameConfig;
+        sr: GameConfig;
+        zzz: GameConfig;
+    };
+    user: UserConfig;
     init: boolean;
-    games: string[];
 }
 
 export interface Backend {

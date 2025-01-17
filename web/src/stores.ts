@@ -16,10 +16,36 @@ async function syncConfig() {
 export const useConfigStore = defineStore('config', {
     state: (): Config => {
         return {
-            user_name: "用户",
             theme: "auto",
+            user_name: "用户",
+            game: {
+                ys: {
+                    enable: false,
+                    uid: "",
+                },
+                sr: {
+                    enable: false,
+                    uid: "",
+                },
+                zzz: {
+                    enable: false,
+                    uid: "",
+                },
+            },
+            user: {
+                name: "",
+                cookie: "",
+                uid: "",
+                ltoken_v1: "",
+                ltoken_v2: "",
+                stoken_v1: "",
+                stoken_v2: "",
+                game_token: "",
+                mid: "",
+                cookie_token: "",
+                fp: "",
+            },
             init: false,
-            games: []
         }
     }
 })

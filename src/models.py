@@ -113,6 +113,37 @@ class BetterDict:
 
 class Config(BetterDict):
     def __init__(self, conf: dict):
-        base = {"theme": "auto", "user_name": "用户", "games": []}
+        base = {
+            "theme": "auto",
+            "user_name": "用户",
+            "game": {
+                "ys": {
+                    "enable": False,
+                    "uid": "",
+                },
+                "sr": {
+                    "enable": False,
+                    "uid": "",
+                },
+                "zzz": {
+                    "enable": False,
+                    "uid": "",
+                },
+            },
+            "user": {
+                "name": "",
+                "cookie": "",
+                "uid": "",
+                "ltoken_v1": "",
+                "ltoken_v2": "",
+                "stoken_v1": "",
+                "stoken_v2": "",
+                "game_token": "",
+                "mid": "",
+                "cookie_token": "",
+                "fp": "",
+            },
+            "init": False,
+        }
         base = merge_dict(base, conf)
         super().__init__(base)

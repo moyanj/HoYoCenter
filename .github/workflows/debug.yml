@@ -58,7 +58,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Installing GTK dependencies..."
-          sudo apt-get install libcairo2-dev libgirepository1.0-dev libglib2.0-dev
+          sudo apt-get install libgirepository-2.0-dev libcairo2-dev gir1.2-gtk-4.0
           uv pip install --system -r pyproject.toml --extra gtk
 
       - name: Download web

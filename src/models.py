@@ -2,12 +2,50 @@ import aiofiles
 import ujson
 
 
+def merge_dict(dict1, dict2):
+    """
+    合并两个字典，支持递归合并嵌套字典和列表类型的值。
+
+    Args:
+        dict1 (Dict[str, Any]): 原始字典
+        dict2 (Dict[str, Any]): 要合并的字典
+
+    Returns:
+        Dict[str, Any]: 合并后的字典
+
+    Raises:
+        TypeError: 如果dict1或dict2不是字典类型
+    """
+    if not isinstance(dict1, dict) or not isinstance(dict2, dict):
+        raise TypeError("Both inputs must be dictionaries")
+
+    for key, value in dict2.items():
+        if isinstance(value, BetterDict):
+            value = value.__dict
+        if key in dict1:
+            dict1_data = dict1[key]
+            if isinstance(dict1_data, BetterDict):
+                dict1_data = dict1_data.__dict
+
+            if isinstance(dict1_data, dict) and isinstance(value, dict):
+                dict1_data = merge_dict(dict1_data, value)
+            elif isinstance(dict1_data, list) and isinstance(value, list):
+                dict1_data.extend(value)
+            else:
+                dict1_data = value
+            dict1[key] = dict1_data
+        else:
+            dict1[key] = value
+
+    return dict1
+
+
 class BetterDict:
     """
     更好的字典
 
     Attributes:
-        __dict (dict):原始字典
+        __dict (dict): 原始字典
     """
 
     def __init__(self, conf: dict):
@@ -15,23 +53,25 @@ class BetterDict:
         self._update()
 
     def __getattr__(self, name):
+        if name == "_BetterDict__dict":
+            return object.__getattribute__(self, name)
         if name in self.__dict:
             return self.__dict[name]
         else:
-            raise AttributeError(f"BetterDict has no attribute '{name}'")
+            raise AttributeError(f"'BetterDict' object has no attribute '{name}'")
 
     def __setattr__(self, name, value):
         if name == "_BetterDict__dict":
             super().__setattr__(name, value)
-            return
-
-        if isinstance(value, dict):
-            value = BetterDict(value)
-        elif isinstance(value, list):
-            value = [
-                BetterDict(item) if isinstance(item, dict) else item for item in value
-            ]
-        self.__dict[name] = value
+        else:
+            if isinstance(value, dict):
+                value = BetterDict(value)
+            elif isinstance(value, list):
+                value = [
+                    BetterDict(item) if isinstance(item, dict) else item
+                    for item in value
+                ]
+            self.__dict[name] = value
 
     def __getitem__(self, name):
         return self.__getattr__(name)
@@ -53,20 +93,26 @@ class BetterDict:
         更新字典内容
 
         Args:
-            conf (dict):要更新的字典
+            conf (dict): 要更新的字典
         """
         if conf:
-            self.__dict = conf
+            self.__dict = merge_dict(self.__dict, conf)
+            for key, value in self.__dict.items():
+                if isinstance(value, dict):
+                    self.__dict[key] = BetterDict(value)
+                elif isinstance(value, list):
+                    self.__dict[key] = [
+                        BetterDict(item) if isinstance(item, dict) else item
+                        for item in value
+                    ]
 
-        for key, value in self.__dict.items():
-            self.__setattr__(key, value)
-
-    async def __save__(self, path: str):
+    async def save(self, path: str):
         async with aiofiles.open(path, "w") as f:
             await f.write(str(self))
 
 
 class Config(BetterDict):
-    user_name: str = "用户"
-    theme: str = "auto"
-    init: bool = False
+    def __init__(self, conf: dict):
+        base = {"theme": "auto", "user_name": "用户", "games": []}
+        base = merge_dict(base, conf)
+        super().__init__(base)

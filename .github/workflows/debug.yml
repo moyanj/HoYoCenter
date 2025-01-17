@@ -58,7 +58,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Installing GTK dependencies..."
-          sudo apt-get install libcairo2-dev libgirepository1.0-dev libglib2.0-dev libgtk-3-dev 
+          sudo apt-get install libcairo2-dev libgirepository1.0-dev libglib2.0-dev
           uv pip install --system -r pyproject.toml --extra gtk
 
       - name: Download web
@@ -80,7 +80,6 @@ jobs:
           compression-level: 0
 
       - name: Build Qt Version
-        if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Running Qt build script..."
           uv pip install --system -r pyproject.toml --extra qt
@@ -88,7 +87,6 @@ jobs:
           python build.py no-web
 
       - name: Upload Qt Version
-        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: HoYoCenter-Qt-${{ matrix.os }}-${{ github.sha }}

@@ -49,18 +49,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Cache GTK Venv
+      - name: Cache Venv
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: .venv
-          key: ${{ matrix.os }}-gtk-venv-${{ hashFiles('pyproject.toml') }}
+          key: ${{ matrix.os }}-venv-${{ hashFiles('pyproject.toml') }}
 
       - name: Install dependencies
         run: |
           echo "Installing Python dependencies..."
           python -m pip install uv
           uv pip install --system -r pyproject.toml
+
+      - name: Cache Venv
+        uses: actions/cache/save@v3
+        with:
+          path: .venv
+          key: ${{ matrix.os }}-venv-${{ hashFiles('pyproject.toml') }}
 
       - name: Install GTK
         if: matrix.os == 'ubuntu-latest'
@@ -86,13 +92,6 @@ jobs:
           name: HoYoCenter-${{ matrix.os }}-${{ github.sha }}
           path: dist/HoYoCenter.zip
           compression-level: 0
-
-      - name: Cache Qt Venv
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: ${{ matrix.os }}-qt-venv-${{ hashFiles('pyproject.toml') }}
 
       - name: Build Qt Version
         if: matrix.os == 'ubuntu-latest'

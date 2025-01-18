@@ -2,14 +2,15 @@
 import { ref, type Ref } from "vue";
 import { useConfigStore } from "@/stores";
 import QrcodeVue from "qrcode.vue";
-import { ElButton, ElCard, ElInput, ElImage } from "element-plus";
+import { ElButton, ElCard, ElInput, ElImage, ElMessage } from "element-plus";
 import { parseCookies } from "@/utils";
-import { get_ltoken_by_login_ticket, generate_hk4e_qrcode_url } from "@/api/auth";
+import { get_ltoken_by_login_ticket, generate_qrcode_url, check_qrcode_status } from "@/api/auth";
 
 const step: Ref<number> = ref(0);
 const ck: Ref<string> = ref("");
 const config = useConfigStore();
 const qr_code_url = ref("");
+var qr_ticket = "";
 
 function add_game(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -82,8 +83,34 @@ async function analyze_ck() {
     step.value = -1;
 }
 
+async function check_qr() {
+    if (step.value !== 5) {
+        return;
+    }
+    let qr_info = await check_qrcode_status(qr_ticket);
+    console.log(qr_info);
+    if (qr_info.retcode === -3501) {
+        ElMessage.error("二维码已失效，请重新扫码");
+        login_by_qr();
+    } else if (qr_info.retcode === -3505) {
+        ElMessage.error("扫码登录已取消，请重新扫码");
+        login_by_qr();
+    } else if (qr_info.retcode === 0) {
+        if (qr_info.data?.status === "Confirmed") {
+            console.log(qr_info)
+        } else {
+            setTimeout(check_qr, 1000);
+        }
+    } else {
+        setTimeout(check_qr, 1000);
+    }
+}
+
 async function login_by_qr() {
-    qr_code_url.value = await generate_hk4e_qrcode_url();
+    const qr_info = await generate_qrcode_url();
+    qr_code_url.value = qr_info.url;
+    qr_ticket = qr_info.ticket;
+    setTimeout(check_qr, 1000);
     step.value = 5;
 }
 </script>
@@ -124,13 +151,13 @@ async function login_by_qr() {
         </div>
         <div v-if="step === 5">
             <h1>请使用米游社扫码登录</h1>
-            <qrcode-vue :value="qr_code_url" :size="150"></qrcode-vue>
+            <qrcode-vue :value="qr_code_url" :size="200"></qrcode-vue>
+            <br>
             <el-button @click="step = -1">完成</el-button>
         </div>
         <div v-if="step === 6">
-            <h1>请输入SToken和Cookie</h1>
-
-            <el-input v-model="ck" placeholder="请输入Cookie" type="textarea" :rows="2"></el-input>
+            <h1>请输入Cookie</h1>
+            <el-input v-model="ck" placeholder="请输入Cookie" type="textarea" :rows="3"></el-input>
             <br>
             <br>
             <el-button @click="analyze_ck()">完成</el-button>

@@ -1,6 +1,6 @@
 import { MiHoYoApi } from "@/model/endpoint";
 import { rpc } from "@/api/rpc";
-import { type LtokenByLoginTicketModel, type GenerateHk4eQrcodeModel } from "@/model/mihoyo";
+import { type LtokenByLoginTicketModel, type GenerateQrcodeModel, type QrCheckModel } from "@/model/mihoyo";
 import { obj2params, uuidv4 } from "@/utils";
 
 export async function get_ltoken_by_login_ticket(login_ticket: string, uid: string): Promise<string> {
@@ -15,17 +15,36 @@ export async function get_ltoken_by_login_ticket(login_ticket: string, uid: stri
     return data.list[0].token;
 }
 
-export async function generate_hk4e_qrcode_url(): Promise<string> {
-    let url = "https://hk4e-sdk.mihoyo.com/hk4e_cn/combo/panda/qrcode/fetch"
+export async function generate_qrcode_url(): Promise<{ url: string, ticket: string }> {
+    let url = "https://passport-api.miyoushe.com/account/ma-cn-passport/web/createQRLogin"
     let res = await rpc.call("requests.post", {
         "url": url,
-        "data": {
-            "app_id": "8",
-            "device": uuidv4(),
+        "headers": {
+            "x-rpc-app_id": "bll8iq97cem8",
+            "x-rpc-device_id": uuidv4(),
         }
     })
 
 
-    let result = res.json as GenerateHk4eQrcodeModel;
-    return result.data.url;
+    let result = res.json as GenerateQrcodeModel;
+    return result.data;
+}
+
+export async function check_qrcode_status(ticket: string): Promise<QrCheckModel> {
+    let url = "https://passport-api.miyoushe.com/account/ma-cn-passport/web/queryQRLoginStatus"
+    let res = await rpc.call("requests.post", {
+        "url": url,
+        "headers": {
+            "x-rpc-app_id": "bll8iq97cem8",
+            "x-rpc-device_id": uuidv4(),
+        },
+        "data": {
+            "ticket": ticket
+        }
+    })
+
+
+    let result = res.json as QrCheckModel;
+    return result;
+
 }

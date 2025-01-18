@@ -34,7 +34,6 @@ export const useConfigStore = defineStore('config', {
             },
             user: {
                 name: "",
-                cookie: "",
                 uid: "",
                 ltoken_v1: "",
                 ltoken_v2: "",

@@ -65,7 +65,6 @@ def build_server():
 def copy_data():
 
     shutil.copytree("web/dist", "dist/HoYoCenter/dist", dirs_exist_ok=True)
-    shutil.copytree("src/data", "dist/HoYoCenter/data", dirs_exist_ok=True)
     with open("dist/HoYoCenter/build_info.json", "w") as f:
         json.dump(make_build_info(), f)
 

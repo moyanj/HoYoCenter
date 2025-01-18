@@ -10,7 +10,7 @@ export async function get_ltoken_by_login_ticket(login_ticket: string, uid: stri
         token_types: 2
     }
     let url = MiHoYoApi.ApiTakumiAuthApi + "/getMultiTokenByLoginTicket?" + obj2params(param);
-    let res = (await rpc.call("requests.get", [url])) as LtokenByLoginTicketModel;
+    let res = (await rpc.call("requests.get", [url])).json as LtokenByLoginTicketModel;
     let data = res.data;
     return data.list[0].token;
 }

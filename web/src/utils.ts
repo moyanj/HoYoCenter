@@ -1,6 +1,6 @@
 import { rpc } from "./api/rpc";
 
-export function changeTheme(theme?: string) {
+export function changeTheme(theme?: string): void {
     const root = document.documentElement;
     if (theme === undefined || theme === 'auto') {
         theme = root.getAttribute('class') === 'dark' ? 'light' : 'dark';
@@ -8,7 +8,7 @@ export function changeTheme(theme?: string) {
     root.setAttribute('class', theme);
 }
 
-export function getTheme() {
+export function getTheme(): string | null {
     return document.documentElement.getAttribute('class');
 }
 
@@ -75,6 +75,10 @@ export function parseCookies(cookieString: string): Record<string, string> {
     return cookies;
 }
 
-export function obj2params(obj: Record<string, string | number>) {
+export function obj2params(obj: Record<string, string | number>): string {
     return Object.keys(obj).map(key => `${key}=${encodeURIComponent(obj[key])}`).join('&');
+}
+
+export function obj2cookies(obj: Record<string, string | number>): string {
+    return Object.keys(obj).map(key => `${key}=${encodeURIComponent(obj[key])}`).join('; ');
 }

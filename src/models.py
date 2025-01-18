@@ -67,7 +67,6 @@ class Config(BetterDict):
             },
             "user": {
                 "name": "",
-                "cookie": "",
                 "uid": "",
                 "ltoken_v1": "",
                 "ltoken_v2": "",

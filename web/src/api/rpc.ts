@@ -4,6 +4,21 @@ if (import.meta.env.DEV) {
 } else {
     base_api = "";
 }
+export class RPCError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "RPCError";
+    }
+}
+
+export class BackendError extends RPCError {
+    id: number;
+    constructor(message: string, id: number) {
+        super(message);
+        this.name = "BackendError";
+        this.id = id;
+    }
+}
 
 export interface GameConfig {
     enable: boolean;
@@ -12,7 +27,6 @@ export interface GameConfig {
 
 export interface UserConfig {
     name: string;
-    cookie: string;
     uid: string;
     ltoken_v1: string;
     ltoken_v2: string;
@@ -36,6 +50,13 @@ export interface Config {
     init: boolean;
 }
 
+interface Response {
+    status_code: number;
+    headers: Map<string, string>;
+    content: string;
+    json: object | null;
+}
+
 export interface Backend {
     "data.config": () => Config;
     "data.urls": () => object;
@@ -45,9 +66,9 @@ export interface Backend {
     "log.error": (msg: string) => void;
     "log.debug": (msg: string) => void;
     "log.warning": (msg: string) => void;
-    "requests.get": (url: string, params?: object, headers?: object) => object;
-    "requests.post": (url: string, params?: object, headers?: object) => object;
-    "requests.req": (method: string, url: string, params?: object, headers?: object) => object;
+    "requests.get": (url: string, params?: object, headers?: object) => Response;
+    "requests.post": (url: string, params?: object, headers?: object) => Response;
+    "requests.req": (method: string, url: string, params?: object, headers?: object) => Response;
 }
 
 type MethodName<T> = keyof {
@@ -78,11 +99,21 @@ class RPC<T> {
             }
         });
         if (!response.ok) {
-            throw new Error(`RPC call failed with status ${response.status}`);
+            throw new RPCError(`Call failed with status ${response.status}`);
         }
-        const result = await response.json();
+        var result: any = {}
+        try {
+            result = await response.json();
+        } catch (error) {
+            throw new RPCError(`Failed to parse response: ${error}`);
+        }
+
         if ("error" in result) {
-            throw new Error(result.error.message);
+            throw new BackendError(result.error.message, result.error.code);
+        }
+
+        if (result.id !== requestPayload.id) {
+            throw new RPCError(`RPC call failed with id ${result.id}`);
         }
         return result.result;
     }

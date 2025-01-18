@@ -108,6 +108,8 @@ watch(
 .content {
     height: 100%;
     padding: 12px 0;
+    margin-right: 12px;
+    width: calc(100% - 170px);
 }   
 
 .initview {

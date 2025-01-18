@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=HoYoCenter
+Comment=A cross-platform tool for querying data of miHoYo series games.
+Exec=HoYoCenter
+Icon=HoYoCenter
+Terminal=false
+Type=Application
+Categories=Utility

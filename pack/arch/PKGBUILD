@@ -40,6 +40,7 @@ package() {
 
   chmod +x "$pkgdir/opt/HoYoCenter/HoYoCenter"
 
+  cp "$srcdir/HoYoCenter/pack/desktop.desktop" "$pkgdir/usr/share/applications/HoYoCenter.desktop"
   mkdir -p "$pkgdir/usr/share/icons/hicolor/512x512/apps"
   cp -r "$srcdir/HoYoCenter/images/icon.png" "$pkgdir/usr/share/icons/hicolor/512x512/apps/HoYoCenter.png"
   

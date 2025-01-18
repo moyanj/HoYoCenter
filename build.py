@@ -5,9 +5,12 @@ import sys
 import zipfile
 import json
 import time
+import re
 
 NPM = "pnpm"
 PYTHON = "python"
+
+pattern = r'version\s*=\s*"(\d+\.\d+\.\d+)"'
 
 
 def clean_build():
@@ -30,7 +33,7 @@ def make_zip():
 
 def make_build_info():
     return {
-        "version": "1.0.0",
+        "version": re.search(pattern, open("pyproject.toml", "r").read()).group(1),  # type: ignore
         "commit": subprocess.check_output("git rev-parse HEAD", shell=True)
         .decode("utf-8")
         .strip(),

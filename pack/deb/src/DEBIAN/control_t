@@ -1,0 +1,7 @@
+Package: hoyocenter
+Version: __VERSION__
+Architecture: amd64
+Installed-Size: __SIZE__
+Depends: libwebkit2gtk-4.0-37
+Maintainer: moyan
+Description: A cross-platform tool for querying data of miHoYo series games.

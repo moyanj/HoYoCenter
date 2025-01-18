@@ -19,7 +19,7 @@
 <p align="center">
 <a href="#介绍">介绍</a> &nbsp;&bull;&nbsp;
 <a href="#安装">安装</a> &nbsp;&bull;&nbsp;
- <a href="/dev">开发文档</a>
+<a href="#开发">开发文档</a>
 </p>
 
 # 介绍
@@ -28,19 +28,17 @@ HoYoCenter 是一个跨平台的米哈游系列游戏数据查询工具，支持
 
 - 崩坏：星穹铁道
 - 原神
-- 绝区零
 
 # 安装
 
-下载[最新 releases 版本](https://github.com/moyanj/HoYoCenter/releases/latest)
+<!-- 下载[最新 releases 版本](https://github.com/moyanj/HoYoCenter/releases/latest) -->
 
 下载[最新开发版本](https://github.com/moyanj/HoYoCenter/actions/workflows/debug.yml)（可能无法正常运行）
 
 ## 安装说明
 
 - 目前预打包仅支持 x86_64 架构的 Windows，Linux 平台（Windows 需要 Windows 10 及以上版本）。
-- ArchLinux 系用户现只支持从源代码运行。
-- Linux 平台请确保您的系统中已安装`libwebkit2gtk-3.0`或`libwebkit2gtk-4.0`。
+- Linux 平台请确保您的系统中已安装`libwebkit2gtk-3.0`或`libwebkit2gtk-4.0`(Qt 版本无需)。
 - Windows 平台请确保您的系统中已安装`Microsoft Edge WebView2`（[下载地址](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/)）。
 
 ## 运行说明
@@ -50,9 +48,11 @@ HoYoCenter 是一个跨平台的米哈游系列游戏数据查询工具，支持
 
 # 开发
 
+可参考[Workflow](.github/workflows/debug.yml)的构建步骤。
+
 ## 环境要求
 
-- Python 3.10
+- Python 3.10 及以上
 - Node.js 22
 
 ## 安装依赖
@@ -79,35 +79,36 @@ python main.py --debug
 ## 打包
 
 ```bash
+# 不带Qt和GTK的版本
+python build.py
+# 带Qt版本
+uv sync --extra qt
+python build.py qt
+# 带GTK版本
+uv sync --extra gtk
 python build.py
 ```
 
 # 特别感谢
 
-- [OpenAI](https://openai.com/)
-- [Microsoft](https://www.microsoft.com/)
+- [UIGF organization](https://uigf.org/)
 - [GitHub](https://github.com/)
-- [清华大学](https://github.com/THUDM)
-- [UIGF organization](https://uigf.org)
 - [EnkaAPI](https://enka.network/)
+- [Microsoft](https://www.microsoft.com/)
+- [阿里云](https://www.aliyun.com/)
 
 # 特定的原神项目
 
 - [Snap.Hutao](https://hut.ao)
-- [Genshin.Launcher.Plus](https://github.com/DawnFz/Genshin.Launcher.Plus)
 - [Starward](https://github.com/Scighost/Starward)
 
 # 使用的技术栈
 
-## 后端
-
 - [fastapi](https://github.com/tiangolo/fastapi)（服务器框架）
+- [jsonrpc](https://www.jsonrpc.org/) （RPC 框架）
 - [pywebview](https://github.com/r0x0r/pywebview)（显示页面）
 - [pyinstaller](https://github.com/pyinstaller/pyinstaller)（打包 EXE）
-
-## 前端
-
 - [Vue](https://vuejs.org/)（前端 JS 框架）
 - [Elment Plus](https://element-plus.org/)（前端 UI 框架）
 - [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
+- [Vite](https://vitejs.dev/) （前端构建工具）

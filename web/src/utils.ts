@@ -1,4 +1,4 @@
-import { rpc } from "./rpc";
+import { rpc } from "./api/rpc";
 
 export function changeTheme(theme?: string) {
     const root = document.documentElement;
@@ -39,11 +39,9 @@ export class logger {
     }
 }
 
-type Cookies = Record<string, string>;
-
-export function parseCookies(cookieString: string): Cookies {
+export function parseCookies(cookieString: string): Record<string, string> {
     // 初始化对象
-    const cookies: Cookies = {};
+    const cookies: Record<string, string> = {};
 
     // 判断 cookieString 是否为空
     if (!cookieString) {
@@ -75,4 +73,8 @@ export function parseCookies(cookieString: string): Cookies {
 
     // 返回 cookies 对象
     return cookies;
+}
+
+export function obj2params(obj: Record<string, string | number>) {
+    return Object.keys(obj).map(key => `${key}=${encodeURIComponent(obj[key])}`).join('&');
 }

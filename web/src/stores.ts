@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { rpc, type Config } from './rpc';
+import { rpc, type Config } from './api/rpc';
 
 export function initConfig(store: any) {
     rpc.call("data.config").then((config: any) => {

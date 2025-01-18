@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { rpc } from "@/rpc";
 import { useConfigStore } from "@/stores";
 import { ElButton, ElCard, ElInput, ElImage } from "element-plus";
 import { parseCookies } from "@/utils";
+import { get_ltoken_by_login_ticket } from "@/api/auth";
 
 const step:Ref<number> = ref(0);
 const ck:Ref<string> = ref("");
@@ -81,7 +81,8 @@ async function analyze_ck() {
         alert("未在cookie中找到login_ticket");
         return;
     }
-
+    config.user.ltoken_v1 = await get_ltoken_by_login_ticket(login_ticket, config.user.uid);   
+    
     step.value = -1;
 }
 </script>

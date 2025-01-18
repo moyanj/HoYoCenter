@@ -14,3 +14,9 @@ export interface LtokenByLoginTicketModel extends BaseMiHoYo {
         ]
     }
 }
+
+export interface GenerateHk4eQrcodeModel extends BaseMiHoYo {
+    data: {
+        url: string
+    }
+}

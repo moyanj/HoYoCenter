@@ -3,6 +3,7 @@ from tkinter import scrolledtext
 from tkinter import font
 import tkinter.ttk as ttk
 import traceback
+import sys
 
 proc = []
 
@@ -51,4 +52,4 @@ def error_handler(exc_type, exc_value, exc_traceback):
     for t in proc:
         t.terminate()
         t.join()
-    exit(1)
+    sys.exit(1)

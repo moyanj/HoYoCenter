@@ -30,8 +30,6 @@ export interface UserConfig {
     uid: string;
     ltoken_v1: string;
     ltoken_v2: string;
-    stoken_v1: string;
-    stoken_v2: string;
     game_token: string;
     mid: string;
     cookie_token: string;
@@ -44,7 +42,6 @@ export interface Config {
     game: {
         ys: GameConfig;
         sr: GameConfig;
-        zzz: GameConfig;
     };
     user: UserConfig;
     init: boolean;

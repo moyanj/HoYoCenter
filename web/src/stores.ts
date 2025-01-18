@@ -26,19 +26,13 @@ export const useConfigStore = defineStore('config', {
                 sr: {
                     enable: false,
                     uid: "",
-                },
-                zzz: {
-                    enable: false,
-                    uid: "",
-                },
+                }
             },
             user: {
                 name: "",
                 uid: "",
                 ltoken_v1: "",
                 ltoken_v2: "",
-                stoken_v1: "",
-                stoken_v2: "",
                 game_token: "",
                 mid: "",
                 cookie_token: "",

@@ -60,18 +60,12 @@ class Config(BetterDict):
                     "enable": False,
                     "uid": "",
                 },
-                "zzz": {
-                    "enable": False,
-                    "uid": "",
-                },
             },
             "user": {
                 "name": "",
                 "uid": "",
                 "ltoken_v1": "",
                 "ltoken_v2": "",
-                "stoken_v1": "",
-                "stoken_v2": "",
                 "game_token": "",
                 "mid": "",
                 "cookie_token": "",

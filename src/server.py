@@ -61,11 +61,6 @@ async def api(request: Request):
 
 
 # 挂载静态文件目录
-app.mount(
-    "/static",
-    StaticFiles(directory=app_dir + "/static", check_dir=False),
-    name="static",
-)
 app.mount("/", StaticFiles(directory=app_dir + "/dist", check_dir=False), name="dist")
 
 if __name__ == "__main__":

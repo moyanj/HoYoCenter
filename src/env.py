@@ -2,7 +2,6 @@ import sys
 import json
 import os
 from loguru import logger as log
-from easydict import EasyDict
 from platformdirs import PlatformDirs
 from models import Config
 
@@ -10,7 +9,6 @@ from typing import Any
 
 __all__ = [
     "DEBUG",
-    "URLS",
     "dirs",
     "is_linux",
     "log",
@@ -21,9 +19,7 @@ __all__ = [
 
 DEBUG = True if "--debug" in sys.argv else False  # 是否为调试模式
 app_dir = os.path.dirname(os.path.realpath(sys.argv[0]))
-URLS: Any = EasyDict(
-    json.load(open(os.path.join(app_dir, "data/urls.json"), encoding="utf-8"))
-)  # 所有URL
+
 try:
     build_info = json.load(
         open(os.path.join(app_dir, "build_info.json"), encoding="utf-8")

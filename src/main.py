@@ -40,7 +40,7 @@ def install_webview():
     messagebox.showwarning("警告", "未安装Microsoft Edge WebView2")
     # 是否安装Microsoft Edge WebView2
     if messagebox.askyesno("提示", "是否安装Microsoft Edge WebView2?"):
-        req = httpx.get(URLS.webview)
+        req = httpx.get("https://go.microsoft.com/fwlink/p/?LinkId=2124703")
         WebViewDownloadPath = os.path.join(
             dirs.user_cache_dir, "MicrosoftEdgeWebView2.exe"
         )
@@ -67,13 +67,21 @@ def run_server(debug):
     return f"http://127.0.0.1:{port}/", t
 
 
+if is_linux:
+    default_renderer = "gtk"
+elif "qt" in build_info["args"]:
+    default_renderer = "qt"
+else:
+    default_renderer = "edge"
+
+
 # 创建WebView窗口
 @click.command()
 @click.option("--debug", is_flag=True, help="是否开启调试模式")
 @click.option("--width", default=1280, help="宽度")
 @click.option("--height", default=720, help="高度")
 @click.option("--minimized", is_flag=True, help="最小化")
-@click.option("--renderer", default="edge", help="Webview渲染器")
+@click.option("--renderer", default=default_renderer, help="Webview渲染器")
 def main(debug, width, height, minimized, renderer):
     """主函数
 

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import SettingView from "@/views/SettingView.vue";
+import HoYoLabView from "@/views/HoYoLabView.vue";
 import FallbackView from "@/views/FallbackView.vue";
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
             path: "/setting",
             name: "setting",
             component: SettingView,
+        },
+        {
+            path: "/hoyolab",
+            name: "hoyolab",
+            component: HoYoLabView,
         },
         {
             path: "/:pathMatch(.*)*",

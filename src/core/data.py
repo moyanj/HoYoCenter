@@ -9,11 +9,6 @@ async def get_config():
     return Success(config.__dict__)
 
 
-@method(name="data.urls")
-async def get_urls():
-    return Success(URLS)
-
-
 @method(name="data.build_info")
 async def get_build_info():
     return Success(build_info)

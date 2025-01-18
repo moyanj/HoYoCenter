@@ -86,7 +86,7 @@ jobs:
           echo "Running Qt build script..."
           uv pip install --system -r pyproject.toml --extra qt
           uv sync --extra qt
-          python build.py no-web
+          python build.py no-web qt
 
       - name: Upload Qt Version
         if: matrix.os == 'ubuntu-latest'

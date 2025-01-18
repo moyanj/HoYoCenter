@@ -151,7 +151,7 @@ async function login_by_qr() {
         </div>
         <div v-if="step === 5">
             <h1>请使用米游社扫码登录</h1>
-            <qrcode-vue :value="qr_code_url" :size="200"></qrcode-vue>
+            <qrcode-vue :value="qr_code_url" :size="200" :margin="2"></qrcode-vue>
             <br>
             <el-button @click="step = -1">完成</el-button>
         </div>

@@ -7,10 +7,6 @@ import { px2viewport } from '@mistjs/vite-plugin-px2viewport';
 
 export default defineConfig({
     plugins: [
-        px2viewport({
-            viewportWidth: 1360,
-            unitPrecision: 10,
-        }),
         vue(),
         vueDevTools()
     ],

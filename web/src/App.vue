@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElMenu, ElMenuItem, ElScrollbar } from 'element-plus';
+import { ElMenu, ElMenuItem, ElScrollbar, ElRow, } from 'element-plus';
 import InitView from './views/Init.vue';
 import { logger, changeTheme } from './utils';
 import { useRouter } from 'vue-router';
@@ -54,36 +54,34 @@ watch(
 <template>
     <div class="menu">
         <el-menu :collapse="true" :route="true" :default-active="active">
-            <el-scrollbar>
-                <div class="title logo">HoYoCenter</div>
-                <el-menu-item index="/" @click="changeMenu('/')">
-                    <img src="./assets/icons/Home.png" class="icon" />开始
-                </el-menu-item>
-                <span class="title">游戏</span>
-                <el-menu-item index="/character" @click="changeMenu('/character')">
-                    <img src="./assets/icons/Character.png" class="icon" />角色
-                </el-menu-item>
-                <el-menu-item index="/gacha" @click="changeMenu('/gacha')">
-                    <img src="./assets/icons/Gacha.png" class="icon" />抽卡
-                </el-menu-item>
-                <el-menu-item index="/achievement" @click="changeMenu('/achievement')">
-                    <img src="./assets/icons/Achievement.png" class="icon" />成就
-                </el-menu-item>
-                <el-menu-item index="/hoyolab" @click="changeMenu('/hoyolab')">
-                    <img src="./assets/icons/MiYouShe.png" class="icon" />米游社
-                </el-menu-item>
-                <el-menu-item index="/info/character" @click="changeMenu('/info/character')">
-                    <img src="./assets/icons/CharacterInfo.png" class="icon" />角色信息
-                </el-menu-item>
-                <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')"><img
-                        src="./assets/icons/MonsterInfo.png" class="icon" />怪物信息</el-menu-item>
-                <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')"><img
-                        src="./assets/icons/WeaponInfo.png" class="icon" />武器信息</el-menu-item>
-                <span class="title">设置</span>
-                <el-menu-item index="/setting" @click="changeMenu('/setting')">
-                    <img src="./assets/icons/Setting.png" class="icon" /><span>设置</span>
-                </el-menu-item>
-            </el-scrollbar>
+            <div class="title logo">HoYoCenter</div>
+            <el-menu-item index="/" @click="changeMenu('/')">
+                <img src="./assets/icons/Home.png" class="icon" />开始
+            </el-menu-item>
+            <span class="title">游戏</span>
+            <el-menu-item index="/character" @click="changeMenu('/character')">
+                <img src="./assets/icons/Character.png" class="icon" />角色
+            </el-menu-item>
+            <el-menu-item index="/gacha" @click="changeMenu('/gacha')">
+                <img src="./assets/icons/Gacha.png" class="icon" />抽卡
+            </el-menu-item>
+            <el-menu-item index="/achievement" @click="changeMenu('/achievement')">
+                <img src="./assets/icons/Achievement.png" class="icon" />成就
+            </el-menu-item>
+            <el-menu-item index="/hoyolab" @click="changeMenu('/hoyolab')">
+                <img src="./assets/icons/MiYouShe.png" class="icon" />米游社
+            </el-menu-item>
+            <el-menu-item index="/info/character" @click="changeMenu('/info/character')">
+                <img src="./assets/icons/CharacterInfo.png" class="icon" />角色信息
+            </el-menu-item>
+            <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')"><img
+                    src="./assets/icons/MonsterInfo.png" class="icon" />怪物信息</el-menu-item>
+            <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')"><img
+                    src="./assets/icons/WeaponInfo.png" class="icon" />武器信息</el-menu-item>
+            <span class="title">设置</span>
+            <el-menu-item index="/setting" @click="changeMenu('/setting')">
+                <img src="./assets/icons/Setting.png" class="icon" />设置
+            </el-menu-item>
         </el-menu>
     </div>
 
@@ -95,7 +93,7 @@ watch(
 <style scoped>
 .menu {
     width: 150px;
-    height: calc(100% - 10px);
+    height: calc(100vh - 10px);
     overflow: overlay;
     margin-right: 20px;
     margin-top: 5px;
@@ -105,6 +103,10 @@ watch(
 .menu .el-menu {
     height: 100%;
     width: 100%;
+}
+
+.menu .el-menu-item {
+    height: calc((100% - 95px) / 9);
 }
 
 .menu .title {

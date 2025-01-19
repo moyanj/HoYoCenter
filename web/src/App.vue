@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ElMenu, ElMenuItem, ElScrollbar } from 'element-plus';
-import InitView from './views/InitView.vue';
+import InitView from './views/Init.vue';
 import { logger, changeTheme } from './utils';
 import { useRouter } from 'vue-router';
 import { useConfigStore } from './stores';

@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-import SettingView from "@/views/SettingView.vue";
-import HoYoLabView from "@/views/HoYoLabView.vue";
-import FallbackView from "@/views/FallbackView.vue";
+import HomeView from "@/views/Home.vue";
+import SettingView from "@/views/Setting.vue";
+import HoYoLabView from "@/views/HoYoLab.vue";
+import CharacterInfoView from "@/views/CharacterInfo.vue";
+import MonsterInfoView from "@/views/MonsterInfo.vue";
+import FallbackView from "@/views/Fallback.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,16 @@ const router = createRouter({
             path: "/hoyolab",
             name: "hoyolab",
             component: HoYoLabView,
+        },
+        {
+            path: "/info/character",
+            name: "character_info",
+            component: CharacterInfoView,
+        },
+        {
+            path: "/info/monster",
+            name: "monster_info",
+            component: MonsterInfoView,
         },
         {
             path: "/:pathMatch(.*)*",

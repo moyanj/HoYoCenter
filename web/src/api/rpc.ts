@@ -39,7 +39,6 @@ export interface UserConfig {
 export interface Config {
     theme: string;
     user_name: string;
-    langauge: string;
     game: {
         ys: GameConfig;
         sr: GameConfig;

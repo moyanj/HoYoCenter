@@ -15,8 +15,6 @@ export default defineConfig({
         },
     },
     build: {
-        target: 'es6',
-
         rollupOptions: {
             output: {
                 entryFileNames: 'assets/main.js',

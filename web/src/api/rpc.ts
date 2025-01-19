@@ -34,6 +34,7 @@ export interface UserConfig {
     mid: string;
     cookie_token: string;
     fp: string;
+    device_id: string;
 }
 
 export interface Config {
@@ -47,11 +48,11 @@ export interface Config {
     init: boolean;
 }
 
-interface Response {
+export interface Response {
     status_code: number;
     headers: Map<string, string>;
     content: string;
-    json: object | null;
+    json: any | null;
 }
 
 export interface Backend {

@@ -87,20 +87,23 @@ async function check_qr() {
     if (step.value !== 5) {
         return;
     }
-    let qr_info = await check_qrcode_status(qr_ticket);
-    console.log(qr_info);
-    if (qr_info.retcode === -3501) {
+    let qr_info = await check_qrcode_status(qr_ticket, config.user.device_id);
+
+    if (qr_info.json.retcode === -3501) {
         ElMessage.error("二维码已失效，请重新扫码");
         login_by_qr();
-    } else if (qr_info.retcode === -3505) {
+    } else if (qr_info.json.retcode === -3505) {
         ElMessage.error("扫码登录已取消，请重新扫码");
         login_by_qr();
-    } else if (qr_info.retcode === -3503) {
+    } else if (qr_info.json.retcode === -3503) {
         ElMessage.error("当前环境存在问题，无法使用扫码登录");
         return;
-    } else if (qr_info.retcode === 0) {
-        if (qr_info.data?.status === "Confirmed") {
-            console.log(qr_info)
+    } else if (qr_info.json.retcode === 0) {
+        if (qr_info.json.data?.status === "Confirmed") {
+            ElMessage.success("扫码成功");
+            ck.value = qr_info.headers.get("set-cookie") as string
+            ck.value = ck.value.replace(/Secure, /g, "")
+            analyze_ck();
         } else {
             setTimeout(check_qr, 2500);
         }
@@ -113,6 +116,7 @@ async function login_by_qr() {
     const qr_info = await generate_qrcode_url();
     qr_code_url.value = qr_info.url;
     qr_ticket = qr_info.ticket;
+    config.user.device_id = qr_info.device_id;
     setTimeout(check_qr, 2500);
     step.value = 5;
 }

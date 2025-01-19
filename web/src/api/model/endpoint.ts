@@ -55,5 +55,6 @@ export class ThirdApi {
 
     static readonly EnkaSRAPI = "https://enka.network/api/hsr/uid/"
     static readonly AvocadoApi = "https://avocado.wiki/v1/raw/info/"
+    static readonly MiHoMoSRApi = "https://api.mihomo.me/sr_info/"
 
 }

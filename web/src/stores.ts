@@ -37,6 +37,7 @@ export const useConfigStore = defineStore('config', {
                 mid: "",
                 cookie_token: "",
                 fp: "",
+                device_id: ""
             },
             init: false,
         }

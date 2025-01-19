@@ -75,8 +75,10 @@ watch(
                 <el-menu-item index="/info/character" @click="changeMenu('/info/character')">
                     <img src="./assets/icons/CharacterInfo.png" class="icon" />角色信息
                 </el-menu-item>
-                <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')">怪物信息</el-menu-item>
-                <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')">武器信息</el-menu-item>
+                <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')"><img
+                        src="./assets/icons/MonsterInfo.png" class="icon" />怪物信息</el-menu-item>
+                <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')"><img
+                        src="./assets/icons/WeaponInfo.png" class="icon" />武器信息</el-menu-item>
                 <span class="title">设置</span>
                 <el-menu-item index="/setting" @click="changeMenu('/setting')">
                     <img src="./assets/icons/Setting.png" class="icon" /><span>设置</span>

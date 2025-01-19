@@ -6,7 +6,7 @@ const configrStore = useConfigStore();
 
 <template>
     <h1>你好，{{ configrStore.user_name }}！</h1>
-    <br>
+
     <el-row :gutter="16">
         <el-col :span="configrStore.game.ys.enable && configrStore.game.sr.enable ? 12 : 24"
             v-if="configrStore.game.ys.enable">

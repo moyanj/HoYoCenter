@@ -119,12 +119,7 @@ watch(
     padding-left: 0;
 }
 
-.content {
-    height: 100%;
-    padding: 12px 0;
-    margin-right: 12px;
-    width: calc(100% - 170px);
-}
+
 
 .initview {
     width: 100%;
@@ -150,5 +145,12 @@ watch(
 <style>
 #app {
     display: flex;
+}
+
+.content {
+    height: 100%;
+    padding: 12px 0;
+    margin-right: 12px;
+    width: calc(100% - 170px);
 }
 </style>

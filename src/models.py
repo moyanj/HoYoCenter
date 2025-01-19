@@ -51,7 +51,6 @@ class Config(BetterDict):
         base = {
             "theme": "auto",
             "user_name": "用户",
-            "language": "zh-cn",
             "game": {
                 "ys": {
                     "enable": False,

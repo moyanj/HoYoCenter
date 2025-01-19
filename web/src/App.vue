@@ -9,8 +9,8 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 const config = useConfigStore();
 const router = useRouter();
 
-function changeMenu(url:string) {
-    logger.info("changeMenu:"+ url);
+function changeMenu(url: string) {
+    logger.info("changeMenu:" + url);
     router.push(url);
 }
 
@@ -55,25 +55,39 @@ watch(
     <div class="menu">
         <el-menu :collapse="true" :route="true" :default-active="active">
             <el-scrollbar>
-            <div class="title logo">HoYoCenter</div>
-            <el-menu-item index="/" @click="changeMenu('/')">开始</el-menu-item>
-            <span class="title">游戏</span>
-            <el-menu-item index="/character" @click="changeMenu('/character')">角色</el-menu-item>
-            <el-menu-item index="/chouka" @click="changeMenu('/chouka')">抽卡</el-menu-item>
-            <el-menu-item index="/achievement" @click="changeMenu('/achievement')">成就</el-menu-item>
-            <el-menu-item index="/hoyolab" @click="changeMenu('/hoyolab')">米游社</el-menu-item>
-            <el-menu-item index="/info/character" @click="changeMenu('/info/character')">角色信息</el-menu-item>
-            <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')">怪物信息</el-menu-item>
-            <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')">武器信息</el-menu-item>
-            <span class="title">设置</span>
-            <el-menu-item index="/setting" @click="changeMenu('/setting')">设置</el-menu-item>
+                <div class="title logo">HoYoCenter</div>
+                <el-menu-item index="/" @click="changeMenu('/')">
+                    <img src="./assets/icons/Home.png" class="icon" />开始
+                </el-menu-item>
+                <span class="title">游戏</span>
+                <el-menu-item index="/character" @click="changeMenu('/character')">
+                    <img src="./assets/icons/Character.png" class="icon" />角色
+                </el-menu-item>
+                <el-menu-item index="/gacha" @click="changeMenu('/gacha')">
+                    <img src="./assets/icons/Gacha.png" class="icon" />抽卡
+                </el-menu-item>
+                <el-menu-item index="/achievement" @click="changeMenu('/achievement')">
+                    <img src="./assets/icons/Achievement.png" class="icon" />成就
+                </el-menu-item>
+                <el-menu-item index="/hoyolab" @click="changeMenu('/hoyolab')">
+                    <img src="./assets/icons/MiYouShe.png" class="icon" />米游社
+                </el-menu-item>
+                <el-menu-item index="/info/character" @click="changeMenu('/info/character')">
+                    <img src="./assets/icons/CharacterInfo.png" class="icon" />角色信息
+                </el-menu-item>
+                <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')">怪物信息</el-menu-item>
+                <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')">武器信息</el-menu-item>
+                <span class="title">设置</span>
+                <el-menu-item index="/setting" @click="changeMenu('/setting')">
+                    <img src="./assets/icons/Setting.png" class="icon" />设置
+                </el-menu-item>
             </el-scrollbar>
         </el-menu>
     </div>
-    
-    <div class="content"><router-view/></div>
-    <div class="initview" v-if="!config.init"><init-view/></div>
-    
+
+    <div class="content"><router-view /></div>
+    <div class="initview" v-if="!config.init"><init-view /></div>
+
 </template>
 
 <style scoped>
@@ -99,7 +113,7 @@ watch(
 
 .logo {
     line-height: 45px;
-    font-size: 20px !important; 
+    font-size: 20px !important;
     font-weight: bold;
     text-align: center !important;
     padding-left: 0;
@@ -110,12 +124,12 @@ watch(
     padding: 12px 0;
     margin-right: 12px;
     width: calc(100% - 170px);
-}   
+}
 
 .initview {
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     position: fixed;
     top: 0;
@@ -126,6 +140,11 @@ watch(
     justify-content: center;
 }
 
+.icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
 </style>
 
 <style>

@@ -16,8 +16,22 @@ export default defineConfig({
     },
     build: {
         target: 'es6',
+
         rollupOptions: {
             output: {
+                entryFileNames: 'assets/main.js',
+                chunkFileNames: (info) => {
+                    if (info.moduleIds[0].endsWith(".json")) {
+                        return 'assets/langauges/[name].js'
+                    }
+                    return 'assets/[name].js'
+                },
+                assetFileNames: (info) => {
+                    if (info.names[0].endsWith('.png') || info.names[0].endsWith('.jpg') || info.names[0].endsWith('.svg')) {
+                        return 'assets/img/[name].[ext]'
+                    }
+                    return 'assets/[name].[ext]'
+                },
                 manualChunks: {
                     framework: ['vue', 'vue-router', 'pinia'],
                     ui: ['element-plus']

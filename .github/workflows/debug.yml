@@ -79,19 +79,4 @@ jobs:
           name: HoYoCenter-${{ matrix.os }}-${{ github.sha }}
           path: dist/HoYoCenter.zip
           compression-level: 0
-
-      - name: Build Qt Version
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          echo "Running Qt build script..."
-          uv pip install --system -r pyproject.toml --extra qt
-          uv sync --extra qt
-          python build.py no-web qt
-
-      - name: Upload Qt Version
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: HoYoCenter-Qt-${{ matrix.os }}-${{ github.sha }}
-          path: dist/HoYoCenter.zip
-          compression-level: 0
+          retention-days: 7

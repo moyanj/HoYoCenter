@@ -15,7 +15,7 @@ const props = defineProps<{ label: string }>()
 .item {
     --el-card-padding: 15px;
     --el-card-border-radius: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .title {

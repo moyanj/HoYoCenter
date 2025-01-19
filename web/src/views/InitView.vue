@@ -95,14 +95,17 @@ async function check_qr() {
     } else if (qr_info.retcode === -3505) {
         ElMessage.error("扫码登录已取消，请重新扫码");
         login_by_qr();
+    } else if (qr_info.retcode === -3503) {
+        ElMessage.error("当前环境存在问题，无法使用扫码登录");
+        return;
     } else if (qr_info.retcode === 0) {
         if (qr_info.data?.status === "Confirmed") {
             console.log(qr_info)
         } else {
-            setTimeout(check_qr, 1000);
+            setTimeout(check_qr, 2500);
         }
     } else {
-        setTimeout(check_qr, 1000);
+        setTimeout(check_qr, 2500);
     }
 }
 
@@ -110,7 +113,7 @@ async function login_by_qr() {
     const qr_info = await generate_qrcode_url();
     qr_code_url.value = qr_info.url;
     qr_ticket = qr_info.ticket;
-    setTimeout(check_qr, 1000);
+    setTimeout(check_qr, 2500);
     step.value = 5;
 }
 </script>

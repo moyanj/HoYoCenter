@@ -1,6 +1,6 @@
-import { MiHoYoApi } from "@/model/endpoint";
+import { MiHoYoApi } from "@/api/model/endpoint";
 import { rpc } from "@/api/rpc";
-import { type LtokenByLoginTicketModel, type GenerateQrcodeModel, type QrCheckModel } from "@/model/mihoyo";
+import { type LtokenByLoginTicketModel, type GenerateQrcodeModel, type QrCheckModel } from "@/api/model/mihoyo";
 import { obj2params, uuidv4 } from "@/utils";
 
 export async function get_ltoken_by_login_ticket(login_ticket: string, uid: string): Promise<string> {

@@ -18,6 +18,7 @@ export const useConfigStore = defineStore('config', {
         return {
             theme: "auto",
             user_name: "用户",
+            langauge: "zh-cn",
             game: {
                 ys: {
                     enable: false,

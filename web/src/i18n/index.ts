@@ -8,13 +8,11 @@ const i18n = createI18n({
 
 // 异步加载语言包
 function loadLanguageAsync(lang: string) {
-    if (i18n.global.locale !== lang) {
-        return import(`./locales/${lang}.json`).then(msgs => {
+    return import(`./locales/${lang}.json`)
+        .then(msgs => {
             i18n.global.setLocaleMessage(lang, msgs.default);
             i18n.global.locale = lang;
         });
-    }
-    return Promise.resolve();
 }
 
 export { i18n, loadLanguageAsync };

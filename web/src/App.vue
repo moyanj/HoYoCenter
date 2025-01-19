@@ -79,7 +79,7 @@ watch(
                 <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')">武器信息</el-menu-item>
                 <span class="title">设置</span>
                 <el-menu-item index="/setting" @click="changeMenu('/setting')">
-                    <img src="./assets/icons/Setting.png" class="icon" />设置
+                    <img src="./assets/icons/Setting.png" class="icon" /><span>{{ $t("设置") }}</span>
                 </el-menu-item>
             </el-scrollbar>
         </el-menu>

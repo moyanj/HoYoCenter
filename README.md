@@ -208,7 +208,7 @@ HoYoCenter 使用了以下技术栈，确保高效、稳定和易用性：
 
 # 许可证
 
-HoYoCenter 采用[类 MIT 许可证](License)，请在使用和分发时遵守相关条款。
+HoYoCenter 采用[类 MIT 许可证](LICENSE)，请在使用和分发时遵守相关条款。
 
 
 ---

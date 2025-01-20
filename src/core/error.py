@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 from tkinter import font
-import tkinter.ttk as ttk
+import ttkbootstrap as ttk
 import traceback
 import sys
 
@@ -25,23 +25,46 @@ class MainWindow(tk.Tk):
         bottom_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # 顶部显示错误信息
-        ttk.Label(top_frame, text="发生了一个错误：", font=font.Font(size=12, weight="bold")).pack(anchor=tk.W)
-        ttk.Label(top_frame, text=f"错误类型：{self.exc_type.__name__}", font=font.Font(size=10)).pack(anchor=tk.W)
-        ttk.Label(top_frame, text=f"错误信息：{str(self.exc_value)}", font=font.Font(size=10)).pack(anchor=tk.W)
-        ttk.Label(top_frame, text="错误追踪信息：", font=font.Font(size=10)).pack(anchor=tk.W)
+        ttk.Label(
+            top_frame, text="发生了一个错误：", font=font.Font(size=12, weight="bold")
+        ).pack(anchor=tk.W)
+        ttk.Label(
+            top_frame,
+            text=f"错误类型：{self.exc_type.__name__}",
+            font=font.Font(size=10),
+        ).pack(anchor=tk.W)
+        ttk.Label(
+            top_frame, text=f"错误信息：{str(self.exc_value)}", font=font.Font(size=10)
+        ).pack(anchor=tk.W)
+        ttk.Label(top_frame, text="错误追踪信息：", font=font.Font(size=10)).pack(
+            anchor=tk.W
+        )
 
         # 底部显示详细的错误追踪信息
         self.error_text = scrolledtext.ScrolledText(bottom_frame, wrap=tk.WORD)
         self.error_text.pack(fill=tk.BOTH, expand=True)
-        self.error_text.insert(tk.END, "".join(traceback.format_exception(self.exc_type, self.exc_value, self.exc_traceback)))
+        self.error_text.insert(
+            tk.END,
+            "".join(
+                traceback.format_exception(
+                    self.exc_type, self.exc_value, self.exc_traceback
+                )
+            ),
+        )
         self.error_text.config(state=tk.DISABLED)  # 设置为不可编辑
 
         # 按钮区域
         button_frame = ttk.Frame(self)
         button_frame.pack(fill=tk.X, padx=10, pady=10)
-        ttk.Button(button_frame, text="复制错误信息", command=self.copy_error).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="关闭", command=self.close_window).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="退出程序", command=self.close_window).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="复制错误信息", command=self.copy_error).pack(
+            side=tk.LEFT, padx=5
+        )
+        ttk.Button(button_frame, text="关闭", command=self.close_window).pack(
+            side=tk.LEFT, padx=5
+        )
+        ttk.Button(button_frame, text="退出程序", command=self.close_window).pack(
+            side=tk.LEFT, padx=5
+        )
 
     def copy_error(self):
         """将错误信息复制到剪贴板"""

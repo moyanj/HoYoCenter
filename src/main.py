@@ -12,6 +12,7 @@ import httpx
 import utils
 from multiprocessing import Process
 import uvicorn
+from core.download import main as m
 
 # 渲染器字典
 renderer_dict = {
@@ -122,6 +123,8 @@ def main(debug, width, height, minimized, renderer):
                 "url": "http://localhost:5173/",
             }
         )
+    else:
+        m()
 
     print("HoYoCenter-Server URL:", url)
     webview.create_window(**window_args)

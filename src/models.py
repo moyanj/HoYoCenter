@@ -51,6 +51,7 @@ class Config(BetterDict):
         base = {
             "theme": "auto",
             "user_name": "用户",
+            "use_enka": False,
             "game": {
                 "ys": {
                     "enable": False,

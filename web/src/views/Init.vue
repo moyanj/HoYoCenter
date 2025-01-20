@@ -104,6 +104,7 @@ async function check_qr() {
             ck.value = qr_info.headers.get("set-cookie") as string
             ck.value = ck.value.replace(/Secure, /g, "")
             analyze_ck();
+            step.value = -1;
         } else {
             setTimeout(check_qr, 2500);
         }
@@ -148,7 +149,7 @@ async function login_by_qr() {
             <h1>请输入游戏UID</h1>
             <el-input v-model="config.game.ys.uid" placeholder="请输入原神UID" v-if="config.game.ys.enable"></el-input>
             <el-input v-model="config.game.sr.uid" placeholder="请输入崩坏：星穹铁道UID" v-if="config.game.sr.enable"></el-input>
-            <el-button @click="step = -1">完成</el-button>
+            <el-button @click="config.use_enka = true; step = -1">完成</el-button>
         </div>
         <div v-if="step === 4">
             <h1>请选择米游社登录方式</h1>
@@ -159,8 +160,7 @@ async function login_by_qr() {
         <div v-if="step === 5">
             <h1>请使用米游社扫码登录</h1>
             <qrcode-vue :value="qr_code_url" :size="200" :margin="2"></qrcode-vue>
-            <br>
-            <el-button @click="step = -1">完成</el-button>
+
         </div>
         <div v-if="step === 6">
             <h1>请输入Cookie</h1>

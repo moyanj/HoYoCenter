@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/Home.vue";
 import SettingView from "@/views/Setting.vue";
 import HoYoLabView from "@/views/HoYoLab.vue";
+import CharacterView from "@/views/Character.vue";
 import CharacterInfoView from "@/views/CharacterInfo.vue";
 import MonsterInfoView from "@/views/MonsterInfo.vue";
 import FallbackView from "@/views/Fallback.vue";
@@ -18,6 +19,11 @@ const router = createRouter({
             path: "/setting",
             name: "setting",
             component: SettingView,
+        },
+        {
+            path: "/character",
+            name: "character",
+            component: CharacterView,
         },
         {
             path: "/hoyolab",

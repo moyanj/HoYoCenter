@@ -195,7 +195,7 @@ HoYoCenter 使用了以下技术栈，确保高效、稳定和易用性：
 
 - [Vite](https://vitejs.dev/)：下一代前端构建工具，提供快速的开发体验。
 
-- [PyWebView]()：用于在桌面环境中显示 Web 页面。
+- [PyWebView](https://github.com/r0x0r/pywebview)：用于在桌面环境中显示 Web 页面。
 
 
 ---

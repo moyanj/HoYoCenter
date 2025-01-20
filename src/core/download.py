@@ -46,8 +46,9 @@ def download():
 
 def main():
     if need_update():
-        r = messagebox.showinfo("更新", "检测到有更新，点击下载...")
-        print(r)
+        r = messagebox.showinfo("资源更新", "检测到有资源更新，点击下载...")
         download()
+        messagebox.showinfo("资源更新", "更新完成")
+
     else:
         pass

@@ -172,3 +172,4 @@ cython_debug/
 
 resources/
 .tmp/
+src/static_version.txt

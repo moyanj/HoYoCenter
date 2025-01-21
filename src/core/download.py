@@ -14,7 +14,7 @@ base_url = random.choice(base_url_list)
 def need_update():
     url = base_url + "version.txt"
     rep = int(httpx.get(url).text)
-    version_path = os.path.join(dirs.user_config_dir, "version.txt")
+    version_path = os.path.join(app_dir, "static_version.txt")
     if not os.path.exists(version_path):
         return True
     else:
@@ -40,7 +40,7 @@ def download():
             zip_ref.extractall(os.path.join(app_dir, "dist", "resources"))
 
     ver = int(httpx.get(base_url + "version.txt").text)
-    with open(os.path.join(dirs.user_config_dir, "version.txt"), "w") as f:
+    with open(os.path.join(app_dir, "static_version.txt"), "w") as f:
         f.write(str(ver))
 
 

@@ -2,6 +2,7 @@
 import { ElSelect, ElOption, ElRow, ElCol } from 'element-plus';
 import { useConfigStore } from '@/stores';
 import { get_genshin_data } from '@/api/data';
+import CharacterCard from '@/components/CharacterCard.vue';
 import { ref, watch } from 'vue';
 
 const config = useConfigStore();
@@ -33,6 +34,12 @@ watch(game, async (newValue, oldValue) => {
         </el-col>
         <el-col :span="3">
             <a>UID: {{ game === "ys" ? config.game.ys.uid : config.game.sr.uid }}</a>
+        </el-col>
+    </el-row>
+    <br>
+    <el-row :gutter="16">
+        <el-col :span="3" v-for="c in data?.avatarList">
+            <character-card :game="game" :character="c.id"></character-card>
         </el-col>
     </el-row>
 </template>

@@ -108,6 +108,7 @@ class RPC<T> {
         }
 
         if ("error" in result) {
+            console.log(result);
             throw new BackendError(result.error.message, result.error.code);
         }
 

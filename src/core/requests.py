@@ -46,10 +46,7 @@ async def get(
         Result: 响应
     """
     async with httpx.AsyncClient() as client:
-        try:
-            response = await client.get(url, params=params, headers=headers)
-        except httpx.RequestError as e:
-            return Error(code=500, message=str(e))
+        response = await client.get(url, params=params, headers=headers)
         return Success(rep2dict(response))
 
 
@@ -61,10 +58,7 @@ async def post(
     data: Optional[dict] = None,
 ):
     async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(url, params=params, headers=headers, json=data)
-        except httpx.RequestError as e:
-            return Error(code=500, message=str(e))
+        response = await client.post(url, params=params, headers=headers, json=data)
         return Success(rep2dict(response))
 
 
@@ -77,10 +71,8 @@ async def req(
     data: Optional[dict] = None,
 ):
     async with httpx.AsyncClient() as client:
-        try:
-            response = await client.request(
-                method, url, params=params, headers=headers, json=data
-            )
-        except httpx.RequestError as e:
-            return Error(code=500, message=str(e))
+        response = await client.request(
+            method, url, params=params, headers=headers, json=data
+        )
+
         return Success(rep2dict(response))

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElMenu, ElMenuItem, ElScrollbar, ElRow, } from 'element-plus';
+import { ElMenu, ElMenuItem, ElScrollbar } from 'element-plus';
 import InitView from './views/Init.vue';
 import { logger, changeTheme } from './utils';
 import { useRouter } from 'vue-router';
@@ -85,7 +85,9 @@ watch(
         </el-menu>
     </div>
 
-    <div class="content"><router-view /></div>
+    <div class="content">
+        <ElScrollbar><router-view /></ElScrollbar>
+    </div>
     <div class="initview" v-if="!config.init"><init-view /></div>
 
 </template>
@@ -122,8 +124,6 @@ watch(
     text-align: center !important;
     padding-left: 0;
 }
-
-
 
 .initview {
     width: 100%;

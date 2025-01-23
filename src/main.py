@@ -11,8 +11,11 @@ import os
 import httpx
 import utils
 from multiprocessing import Process
+import multiprocessing
 import uvicorn
 from core.download import main as m
+
+# multiprocessing.set_start_method("spawn", True)
 
 # 渲染器字典
 renderer_dict = {
@@ -52,16 +55,19 @@ def install_webview():
         utils.restart()
 
 
+def _run_server():
+    uvicorn.run(
+        flask,
+        host="127.0.0.1",
+        port=utils.get_free_port(),
+        log_level="critical",
+    )
+
+
 def run_server(debug):
     port = utils.get_free_port()
     t = Process(
-        target=uvicorn.run,
-        kwargs={
-            "host": "127.0.0.1",
-            "port": port,
-            "app": flask,
-            "log_level": "critical",
-        },
+        target=_run_server,
         name="HoYoCenter-Server",
     )
     t.start()

@@ -57,4 +57,13 @@ export class ThirdApi {
     static readonly AvocadoApi = "https://avocado.wiki/v1/raw/info/"
     static readonly MiHoMoSRApi = "https://api.mihomo.me/sr_info/"
 
+    static readonly YsDataApiMap = {
+        "enka": ThirdApi.EnkaApi,
+        "microgg": ThirdApi.MicroGGEnka,
+    }
+    static readonly SrDataApiMap = {
+        "enka": ThirdApi.EnkaSRAPI,
+        "avocado": ThirdApi.AvocadoApi,
+        "mihomo": ThirdApi.MiHoMoSRApi,
+    }
 }

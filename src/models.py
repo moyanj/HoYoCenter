@@ -62,6 +62,10 @@ class Config(BetterDict):
                     "uid": "",
                 },
             },
+            "enka": {
+                "ys": "",
+                "sr": "",
+            },
             "user": {
                 "name": "",
                 "uid": "",

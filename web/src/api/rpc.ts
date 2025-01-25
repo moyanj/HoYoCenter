@@ -41,6 +41,10 @@ export interface Config {
     theme: string;
     user_name: string;
     use_enka: boolean;
+    enka: {
+        ys: string;
+        sr: string;
+    };
     game: {
         ys: GameConfig;
         sr: GameConfig;

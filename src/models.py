@@ -63,8 +63,8 @@ class Config(BetterDict):
                 },
             },
             "enka": {
-                "ys": "",
-                "sr": "",
+                "ys": "enka",
+                "sr": "enka",
             },
             "user": {
                 "name": "",

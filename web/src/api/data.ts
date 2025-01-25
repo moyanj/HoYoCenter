@@ -1,15 +1,14 @@
 import { useConfigStore } from "@/stores";
 import { rpc } from "./rpc";
 import { ThirdApi } from "./model/endpoint";
-import { type EnkaYsInfo } from "./model/enka";
+import { type EnkaYsInfo, type EnkaSrInfo } from "./model/enka";
 import { type GenshinData } from "./model/game_data";
 import { ElLoading } from 'element-plus'
 
 async function get_genshin_data_by_enka(): Promise<GenshinData> {
     const config = useConfigStore();
-    var rep = await rpc.call("requests.get", [ThirdApi.EnkaApi + config.game.ys.uid]);
+    var rep = await rpc.call("requests.get", [ThirdApi.YsDataApiMap[config.enka.ys] + config.game.ys.uid]);
     var data: EnkaYsInfo = rep.json;
-    ElLoading.service().close();
     return {
         nickname: data.playerInfo.nickname,
         level: data.playerInfo.level,
@@ -38,5 +37,18 @@ export async function get_genshin_data() {
         var rep = await get_genshin_data_by_enka();
         ElLoading.service().close();
         return rep;
+    }
+}
+
+async function get_sr_data_by_enka(): Promise<GenshinData> {
+    const config = useConfigStore();
+    var rep = await rpc.call("requests.get", [ThirdApi.SrDataApiMap[config.enka.sr] + config.game.sr.uid]);
+    var data: EnkaSrInfo = rep.json;
+    return {
+        nickname: data.playerInfo.nickname,
+        level: data.playerInfo.level,
+        worldLevel: data.playerInfo.worldLevel,
+        signature: data.playerInfo.signature,
+        profilePictureID: data.playerInfo.profilePicture.id,
     }
 }

@@ -20,8 +20,8 @@ export const useConfigStore = defineStore('config', {
             user_name: "用户",
             use_enka: false,
             enka: {
-                ys: "",
-                sr: "",
+                ys: "enka",
+                sr: "enka",
             },
             game: {
                 ys: {

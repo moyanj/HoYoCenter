@@ -100,7 +100,8 @@ def main(debug, width, height, minimized, renderer):
         messagebox.showerror("错误", "请输入正确的渲染引擎！")
         exit()
 
-    install_webview()
+    if renderer == "edge":
+        install_webview()
 
     # 判断是否启动服务器
     url, t = run_server(debug)

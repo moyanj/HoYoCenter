@@ -45,10 +45,32 @@ async function get_sr_data_by_enka(): Promise<GenshinData> {
     var rep = await rpc.call("requests.get", [ThirdApi.SrDataApiMap[config.enka.sr] + config.game.sr.uid]);
     var data: EnkaSrInfo = rep.json;
     return {
-        nickname: data.playerInfo.nickname,
-        level: data.playerInfo.level,
-        worldLevel: data.playerInfo.worldLevel,
-        signature: data.playerInfo.signature,
-        profilePictureID: data.playerInfo.profilePicture.id,
+        nickname: data.detailInfo.nickname,
+        level: data.detailInfo.level,
+        worldLevel: data.detailInfo.worldLevel,
+        signature: data.detailInfo.nickname,
+        profilePictureID: data.detailInfo.headIcon,
+        abyss: {
+            floor: -1,
+            level: -1,
+        },
+        avatarList: data.detailInfo.avatarDetailList.map(avatar => ({
+            id: avatar.avatarId,
+            level: avatar.level,
+        })),
+    }
+}
+
+export async function get_sr_data() {
+    const config = useConfigStore();
+    if (config.use_enka) {
+        ElLoading.service({
+            lock: true,
+            text: '正在获取数据...',
+            background: 'rgba(0, 0, 0, 0.7)',
+        });
+        var rep = await get_sr_data_by_enka();
+        ElLoading.service().close();
+        return rep;
     }
 }

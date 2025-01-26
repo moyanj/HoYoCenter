@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ElSelect, ElOption, ElRow, ElCol } from 'element-plus';
 import { useConfigStore } from '@/stores';
-import { get_genshin_data } from '@/api/data';
+import { get_genshin_data, get_sr_data } from '@/api/data';
 import CharacterCard from '@/components/CharacterCard.vue';
 import { ref, watch } from 'vue';
 
@@ -13,8 +13,9 @@ const data = ref();
 watch(game, async (newValue, oldValue) => {
     if (newValue === 'ys') {
         data.value = await get_genshin_data();
-    } else {
-        data.value = config.game.sr;
+    } else if (newValue === 'sr') {
+        data.value = await get_sr_data();
+        console.log(data.value);
     }
 }, {
     immediate: true

@@ -34,17 +34,6 @@ async def error_500(request: Request, exc: HTTPException):
     return Rest("未知错误", 500, data=str(exc.detail))
 
 
-# 输出日志
-@app.middleware("http")
-async def log_request(request: Request, call_next):
-    response: Response = await call_next(request)
-    if request.url.path != "/log":
-        log.info(
-            f"{request.method} {request.url.path}{'?' if request.query_params else ''}{request.query_params} {response.status_code}"
-        )
-    return response
-
-
 @app.get("/")
 async def index():
     # 返回主页

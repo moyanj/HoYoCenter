@@ -1,4 +1,5 @@
 import { rpc } from "./api/rpc";
+import CryptoJS from 'crypto-js';
 
 export function changeTheme(theme?: string): void {
     const root = document.documentElement;
@@ -73,6 +74,57 @@ export function parseCookies(cookieString: string): Record<string, string> {
 
     // 返回 cookies 对象
     return cookies;
+}
+
+class AesEncryption {
+    private secretKey: string;
+
+    constructor(secretKey: string) {
+        this.secretKey = secretKey;
+    }
+
+    /**
+     * 加密字符串
+     * @param plaintext 明文字符串
+     * @returns 加密后的密文
+     */
+    public encrypt(plaintext: string): string {
+        const ciphertext = CryptoJS.AES.encrypt(plaintext, this.secretKey).toString();
+        return ciphertext;
+    }
+
+    /**
+     * 解密字符串
+     * @param ciphertext 密文字符串
+     * @returns 解密后的明文
+     */
+    public decrypt(ciphertext: string): string {
+        const bytes = CryptoJS.AES.decrypt(ciphertext, this.secretKey);
+        const originalText = bytes.toString(CryptoJS.enc.Utf8);
+        return originalText;
+    }
+
+    /**
+     * 加密字节数组
+     * @param plaintextBytes 明文字节数组
+     * @returns 加密后的密文字节数组
+     */
+    public encryptBytes(plaintextBytes: Uint8Array): Uint8Array {
+        const plaintext = CryptoJS.lib.WordArray.create(plaintextBytes);
+        const ciphertext = CryptoJS.AES.encrypt(plaintext, this.secretKey).ciphertext;
+        return CryptoJS.lib.WordArray.create(ciphertext).toByteArray();
+    }
+
+    /**
+     * 解密字节数组
+     * @param ciphertextBytes 密文字节数组
+     * @returns 解密后的明文字节数组
+     */
+    public decryptBytes(ciphertextBytes: Uint8Array): Uint8Array {
+        const ciphertext = CryptoJS.lib.WordArray.create(ciphertextBytes);
+        const bytes = CryptoJS.AES.decrypt({ ciphertext }, this.secretKey);
+        return CryptoJS.lib.WordArray.create(bytes).toByteArray();
+    }
 }
 
 export function obj2params(obj: Record<string, string | number>): string {

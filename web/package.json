@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mistjs/vite-plugin-px2viewport": "^0.0.13",
+    "crypto-js": "^4.2.0",
     "element-plus": "^2.9.3",
     "pinia": "^2.3.0",
     "qrcode.vue": "^3.6.0",

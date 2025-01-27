@@ -10,7 +10,6 @@ const config = useConfigStore();
 const router = useRouter();
 
 function changeMenu(url: string) {
-    logger.info("changeMenu:" + url);
     router.push(url);
 }
 

@@ -26,8 +26,8 @@ try:
     )
 except:
     build_info = {
-        "version": "DEBUG",
-        "commit": "__debug__",
+        "version": "__debug__",
+        "commit": "00000000",
         "branch": "main",
         "python": "3",
         "platform": "debug",

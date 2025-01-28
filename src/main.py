@@ -65,7 +65,6 @@ def _run_server():
 
 
 def run_server(debug):
-    port = utils.get_free_port()
     t = Process(
         target=_run_server,
         name="HoYoCenter-Server",
@@ -131,6 +130,9 @@ def main(debug, width, height, minimized, renderer):
             }
         )
     else:
+        start_args.update({
+            'icon':os.path.join(app_dir, 'dist', 'imgs', 'icon.png')
+        })
         m()
 
     print("HoYoCenter-Server URL:", url)
@@ -140,7 +142,6 @@ def main(debug, width, height, minimized, renderer):
     # 强制结束服务器
     t.terminate()
     t.join()
-
 
 if __name__ == "__main__":
     main()

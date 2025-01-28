@@ -104,27 +104,6 @@ class AesEncryption {
         return originalText;
     }
 
-    /**
-     * 加密字节数组
-     * @param plaintextBytes 明文字节数组
-     * @returns 加密后的密文字节数组
-     */
-    public encryptBytes(plaintextBytes: Uint8Array): Uint8Array {
-        const plaintext = CryptoJS.lib.WordArray.create(plaintextBytes);
-        const ciphertext = CryptoJS.AES.encrypt(plaintext, this.secretKey).ciphertext;
-        return CryptoJS.lib.WordArray.create(ciphertext).toByteArray();
-    }
-
-    /**
-     * 解密字节数组
-     * @param ciphertextBytes 密文字节数组
-     * @returns 解密后的明文字节数组
-     */
-    public decryptBytes(ciphertextBytes: Uint8Array): Uint8Array {
-        const ciphertext = CryptoJS.lib.WordArray.create(ciphertextBytes);
-        const bytes = CryptoJS.AES.decrypt({ ciphertext }, this.secretKey);
-        return CryptoJS.lib.WordArray.create(bytes).toByteArray();
-    }
 }
 
 export function obj2params(obj: Record<string, string | number>): string {

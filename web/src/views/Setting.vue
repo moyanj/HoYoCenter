@@ -3,18 +3,20 @@
     import SettingItem from '@/components/SettingItem.vue';
     import { useConfigStore } from '@/stores';
     import { rpc } from '@/api/rpc';
-    import { ref } from 'vue';
-    
+    import { ref, type Ref } from 'vue';
+    import { useRouter } from 'vue-router';
+
     const config = useConfigStore();
-    const build_info = ref({});
-    
+    const build_info:Ref<any> = ref({});
+    const router = useRouter();
+
     const confirmReset = () => {
         ElMessageBox.confirm('此操作将重新初始化配置，所有设置将恢复到默认值。是否继续?', '警告', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning',
         }).then(() => {
-            $router.push('/');
+            router.push('/');
             config.init = false;
         }).catch(() => {
             // 取消操作

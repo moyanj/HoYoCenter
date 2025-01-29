@@ -6,7 +6,6 @@ import { ElButton, ElCard, ElInput, ElImage, ElMessage } from "element-plus";
 import { parseCookies } from "@/utils";
 import { get_ltoken_by_login_ticket, generate_qrcode_url, check_qrcode_status } from "@/api/auth";
 
-const step: Ref<number> = ref(0);
 const ck: Ref<string> = ref("");
 const config = useConfigStore();
 const qr_code_url = ref("");
@@ -80,11 +79,11 @@ async function analyze_ck() {
     }
     config.user.ltoken_v1 = await get_ltoken_by_login_ticket(login_ticket, config.user.uid);
 
-    step.value = -1;
+    config.step.value = -1;
 }
 
 async function check_qr() {
-    if (step.value !== 5) {
+    if (config.step.value !== 5) {
         return;
     }
     let qr_info = await check_qrcode_status(qr_ticket, config.user.device_id);
@@ -104,7 +103,7 @@ async function check_qr() {
             ck.value = qr_info.headers.get("set-cookie") as string
             ck.value = ck.value.replace(/Secure, /g, "")
             analyze_ck();
-            step.value = -1;
+            config.step.value = -1;
         } else {
             setTimeout(check_qr, 2500);
         }
@@ -119,17 +118,17 @@ async function login_by_qr() {
     qr_ticket = qr_info.ticket;
     config.user.device_id = qr_info.device_id;
     setTimeout(check_qr, 2500);
-    step.value = 5;
+    config.step.value = 5;
 }
 </script>
 
 <template>
     <el-card class="init-view">
-        <div v-if="step === 0">
+        <div v-if="config.step === 0">
             <h1>欢迎使用HoYoCenter</h1>
-            <el-button @click="step = 1">开始</el-button>
+            <el-button @click="config.step = 1">开始</el-button>
         </div>
-        <div v-if="step === 1">
+        <div v-if="config.step === 1">
             <h1>请勾选需要的游戏</h1>
             <div class="game-list">
                 <el-card class="game-card" :class="{ 'is-selected': config.game.ys.enable }" @click="add_game"><el-image
@@ -138,38 +137,38 @@ async function login_by_qr() {
                         src="/imgs/game-sr.jpg" id="sr" /></el-card>
             </div>
             <br>
-            <el-button @click="step = 2">下一步</el-button>
+            <el-button @click="config.step = 2">下一步</el-button>
         </div>
-        <div v-if="step === 2">
+        <div v-if="config.step === 2">
             <h1>请选择登录方式</h1>
-            <el-button @click="step = 3">游戏UID(仅支持查看展柜角色)</el-button>
-            <el-button @click="step = 4">米游社账户</el-button>
+            <el-button @click="config.step = 3">游戏UID(仅支持查看展柜角色)</el-button>
+            <el-button @click="config.step = 4">米游社账户</el-button>
         </div>
-        <div v-if="step === 3">
+        <div v-if="config.step === 3">
             <h1>请输入游戏UID</h1>
             <el-input v-model="config.game.ys.uid" placeholder="请输入原神UID" v-if="config.game.ys.enable"></el-input>
             <el-input v-model="config.game.sr.uid" placeholder="请输入崩坏：星穹铁道UID" v-if="config.game.sr.enable"></el-input>
-            <el-button @click="config.use_enka = true; step = -1">完成</el-button>
+            <el-button @click="config.use_enka = true; config.step = -1">完成</el-button>
         </div>
-        <div v-if="step === 4">
+        <div v-if="config.step === 4">
             <h1>请选择米游社登录方式</h1>
             <el-button @click="login_by_qr()">使用米游社扫码</el-button>
-            <el-button @click="step = 6">手动输入Cookie</el-button>
+            <el-button @click="config.step = 6">手动输入Cookie</el-button>
 
         </div>
-        <div v-if="step === 5">
+        <div v-if="config.step === 5">
             <h1>请使用米游社扫码登录</h1>
             <qrcode-vue :value="qr_code_url" :size="200" :margin="2"></qrcode-vue>
 
         </div>
-        <div v-if="step === 6">
+        <div v-if="config.step === 6">
             <h1>请输入Cookie</h1>
             <el-input v-model="ck" placeholder="请输入Cookie" type="textarea" :rows="3"></el-input>
             <br>
             <br>
             <el-button @click="analyze_ck()">完成</el-button>
         </div>
-        <div v-if="step === -1">
+        <div v-if="config.step === -1">
             <h1>完成！</h1>
             <el-button @click="config.init = true">关闭</el-button>
         </div>

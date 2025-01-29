@@ -41,6 +41,7 @@ export interface Config {
     theme: string;
     user_name: string;
     use_enka: boolean;
+    step: number;
     enka: {
         ys: string;
         sr: string;

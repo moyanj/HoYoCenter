@@ -19,6 +19,7 @@ export const useConfigStore = defineStore('config', {
             theme: "auto",
             user_name: "用户",
             use_enka: false,
+            step: 0,
             enka: {
                 ys: "enka",
                 sr: "enka",

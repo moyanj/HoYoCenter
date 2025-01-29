@@ -52,6 +52,7 @@ class Config(BetterDict):
             "theme": "auto",
             "user_name": "用户",
             "use_enka": False,
+            "step": 0,
             "game": {
                 "ys": {
                     "enable": False,

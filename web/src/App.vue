@@ -84,8 +84,7 @@ watch(
         </el-menu>
     </div>
 
-    <div class="content">
-        <ElScrollbar><router-view /></ElScrollbar>
+    <div class="content"><router-view />
     </div>
     <div class="initview" v-if="!config.init"><init-view /></div>
 

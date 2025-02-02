@@ -11,7 +11,7 @@ export async function get_ys_character_info(id: number) {
 
 export async function get_sr_character_info(id: number) {
     if (sr_character_info_cache === null) {
-        let res = await fetch("/resources/StarRail/Infomation/Avatar/AvatarInfo.json");
+        let res = await fetch("/resources/StarRail/Infomation/characters.json");
         sr_character_info_cache = await res.json();
     }
     // @ts-ignore

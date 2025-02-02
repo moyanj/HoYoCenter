@@ -24,6 +24,7 @@ renderer_dict = {
     "gtk": "gtk",  # WebKit2GTK
     "qt": "qt",  # QTWebEngine
 }
+port = -1
 
 
 def has_webview():
@@ -56,15 +57,18 @@ def install_webview():
 
 
 def _run_server():
+    global port
     uvicorn.run(
         flask,
         host="127.0.0.1",
-        port=utils.get_free_port(),
+        port=port,
         log_level="critical",
     )
 
 
 def run_server(debug):
+    global port
+    port = utils.get_free_port()
     t = Process(
         target=_run_server,
         name="HoYoCenter-Server",
@@ -129,10 +133,9 @@ def main(debug, width, height, minimized, renderer):
                 "url": "http://localhost:5173/",
             }
         )
+        start_args.update({"icon": os.path.join(app_dir, "..", "images", "icon.png")})
     else:
-        start_args.update({
-            'icon':os.path.join(app_dir, 'dist', 'imgs', 'icon.png')
-        })
+        start_args.update({"icon": os.path.join(app_dir, "dist", "imgs", "icon.png")})
         m()
 
     print("HoYoCenter-Server URL:", url)
@@ -142,6 +145,7 @@ def main(debug, width, height, minimized, renderer):
     # 强制结束服务器
     t.terminate()
     t.join()
+
 
 if __name__ == "__main__":
     main()

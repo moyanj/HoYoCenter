@@ -10,7 +10,7 @@ const config = useConfigStore();
 const game = ref('ys');
 const show_character_dialog = ref(false);
 const data = ref();
-const character_info = ref({});
+const character_info = ref();
 
 watch(game, async (newValue, oldValue) => {
     if (newValue === 'ys') {
@@ -61,10 +61,10 @@ function show_character(id: number) {
 
     <el-dialog v-model="show_character_dialog" title="角色详情" width="50%">
         <div v-if="game === 'ys'">
-            {{ character_info.Name }}
+            {{ character_info?.Name }}
         </div>
         <div v-if="game === 'sr'">
-            <h3>{{ character_info.name === "{NICKNAME}" ? data.nickname : character_info.name }}</h3>
+            <h3>{{ character_info?.name === "{NICKNAME}" ? data.nickname : character_info?.name }}</h3>
         </div>
     </el-dialog>
 </template>

@@ -79,11 +79,11 @@ async function analyze_ck() {
     }
     config.user.ltoken_v1 = await get_ltoken_by_login_ticket(login_ticket, config.user.uid);
 
-    config.step.value = -1;
+    config.step = -1;
 }
 
 async function check_qr() {
-    if (config.step.value !== 5) {
+    if (config.step !== 5) {
         return;
     }
     let qr_info = await check_qrcode_status(qr_ticket, config.user.device_id);
@@ -103,7 +103,7 @@ async function check_qr() {
             ck.value = qr_info.headers.get("set-cookie") as string
             ck.value = ck.value.replace(/Secure, /g, "")
             analyze_ck();
-            config.step.value = -1;
+            config.step = -1;
         } else {
             setTimeout(check_qr, 2500);
         }
@@ -118,7 +118,7 @@ async function login_by_qr() {
     qr_ticket = qr_info.ticket;
     config.user.device_id = qr_info.device_id;
     setTimeout(check_qr, 2500);
-    config.step.value = 5;
+    config.step = 5;
 }
 </script>
 

@@ -135,7 +135,7 @@ def main(debug, width, height, minimized, renderer):
         )
         start_args.update({"icon": os.path.join(app_dir, "..", "images", "icon.png")})
     else:
-        start_args.update({"icon": os.path.join(app_dir, "dist", "imgs", "icon.png")})
+        start_args.update({"icon": os.path.join(app_dir, "dist", "icon.png")})
         m()
 
     print("HoYoCenter-Server URL:", url)

@@ -61,10 +61,12 @@ function show_character(id: number) {
 
     <el-dialog v-model="show_character_dialog" title="角色详情" width="50%">
         <div v-if="game === 'ys'">
-            {{ character_info?.Name }}
+            <h3>{{ character_info?.Name }}</h3>
+            Lv.{{ data.level }}
         </div>
         <div v-if="game === 'sr'">
             <h3>{{ character_info?.name === "{NICKNAME}" ? data.nickname : character_info?.name }}</h3>
+            Lv.{{ data.level }}
         </div>
     </el-dialog>
 </template>

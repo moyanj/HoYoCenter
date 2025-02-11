@@ -5,6 +5,7 @@ import hashlib
 import base64
 import platform
 from env import *
+import webview
 
 
 @method(name="data.config")
@@ -52,6 +53,7 @@ async def log_debug(msg: str):
     base_log("DEBUG", msg)
     return Success()
 
+
 @method(name="data.device_id")
 async def get_device_id():
     # 获取系统信息
@@ -69,7 +71,7 @@ async def get_device_id():
         system_name
         + "_"
         + system_version
-        + '_'
+        + "_"
         + computer_name
         + "_"
         + computer_system
@@ -82,9 +84,16 @@ async def get_device_id():
         + "_"
         + cpu_arch
     )
-    
+
     # 对设备ID进行SHA-256哈希
     hash_id = hashlib.sha256(deviceid.encode("utf-8")).digest()
     big_hash_id = base64.b85encode(hash_id).decode()  # 转换为大写
 
     return Success(big_hash_id)
+
+
+@method(name="data.open_url")
+async def open_url(url: str):
+    window = webview.create_window("", url)
+    webview.start(window)
+    return Success()

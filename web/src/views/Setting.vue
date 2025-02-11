@@ -67,6 +67,9 @@ rpc.call("data.build_info").then((data) => {
         <SettingItem label="危险操作">
             <el-button type="danger" @click="confirmReset">重新初始化</el-button>
         </SettingItem>
+        <SettingItem label="关于">
+            <ElButton @click="rpc.call('data.open_url', 'https://baidu.com')">打开百度</ElButton>
+        </SettingItem>
     </el-scrollbar>
 </template>
 

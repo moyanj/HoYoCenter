@@ -73,6 +73,7 @@ export interface Backend {
     "requests.get": (url: string, params?: object, headers?: object) => Response;
     "requests.post": (url: string, params?: object, headers?: object) => Response;
     "requests.req": (method: string, url: string, params?: object, headers?: object) => Response;
+    "data.open_url": (url: string) => void;
 }
 
 type MethodName<T> = keyof {

@@ -70,13 +70,13 @@ watch(
             <el-menu-item index="/hoyolab" @click="changeMenu('/hoyolab')">
                 <img src="./assets/icons/MiYouShe.png" class="icon" />米游社
             </el-menu-item>
-            <el-menu-item index="/info/character" @click="changeMenu('/info/character')">
-                <img src="./assets/icons/CharacterInfo.png" class="icon" />角色信息
+            <el-menu-item index="/wiki/character" @click="changeMenu('/wiki/character')">
+                <img src="./assets/icons/CharacterWiki.png" class="icon" />角色信息
             </el-menu-item>
-            <el-menu-item index="/info/monster" @click="changeMenu('/info/monster')"><img
-                    src="./assets/icons/MonsterInfo.png" class="icon" />怪物信息</el-menu-item>
-            <el-menu-item index="/info/weapon" @click="changeMenu('/info/weapon')"><img
-                    src="./assets/icons/WeaponInfo.png" class="icon" />武器信息</el-menu-item>
+            <el-menu-item index="/wiki/monster" @click="changeMenu('/wiki/monster')"><img
+                    src="./assets/icons/MonsterWiki.png" class="icon" />怪物信息</el-menu-item>
+            <el-menu-item index="/wiki/weapon" @click="changeMenu('/wiki/weapon')"><img
+                    src="./assets/icons/WeaponWiki.png" class="icon" />武器信息</el-menu-item>
             <span class="title">设置</span>
             <el-menu-item index="/setting" @click="changeMenu('/setting')">
                 <img src="./assets/icons/Setting.png" class="icon" />设置

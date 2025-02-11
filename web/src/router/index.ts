@@ -3,8 +3,8 @@ import HomeView from "@/views/Home.vue";
 import SettingView from "@/views/Setting.vue";
 import HoYoLabView from "@/views/HoYoLab.vue";
 import CharacterView from "@/views/Character.vue";
-import CharacterInfoView from "@/views/CharacterInfo.vue";
-import MonsterInfoView from "@/views/MonsterInfo.vue";
+import CharacterWikiView from "@/views/CharacterWiki.vue";
+import MonsterWikiView from "@/views/MonsterWiki.vue";
 import FallbackView from "@/views/Fallback.vue";
 
 const router = createRouter({
@@ -31,14 +31,14 @@ const router = createRouter({
             component: HoYoLabView,
         },
         {
-            path: "/info/character",
-            name: "character_info",
-            component: CharacterInfoView,
+            path: "/wiki/character",
+            name: "character_wiki",
+            component: CharacterWikiView,
         },
         {
-            path: "/info/monster",
-            name: "monster_info",
-            component: MonsterInfoView,
+            path: "/wiki/monster",
+            name: "monster_wiki",
+            component: MonsterWikiView,
         },
         {
             path: "/:pathMatch(.*)*",
